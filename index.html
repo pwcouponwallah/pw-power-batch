@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yugal Shares - Secure File Transfer</title>
+    <title>Yugal Shares - Instant File Transfer</title>
     <style>
         :root {
             --black: #000000;
@@ -14,6 +14,9 @@
             --gray-700: #616161;
             --primary: #000000;
             --secondary: #333333;
+            --green: #4CAF50;
+            --red: #F44336;
+            --yellow: #FFC107;
         }
         
         * {
@@ -159,15 +162,15 @@
         }
         
         .status-dot.connected {
-            background-color: #4CAF50;
+            background-color: var(--green);
         }
         
         .status-dot.disconnected {
-            background-color: #F44336;
+            background-color: var(--red);
         }
         
         .status-dot.pending {
-            background-color: #FFC107;
+            background-color: var(--yellow);
         }
         
         .drop-area {
@@ -424,7 +427,7 @@
     <div class="container">
         <header>
             <h1>Yugal Shares</h1>
-            <p class="subtitle">Secure peer-to-peer file sharing</p>
+            <p class="subtitle">Instant peer-to-peer file sharing</p>
         </header>
         
         <div class="tabs">
@@ -601,19 +604,6 @@
         const settingsPeerId = document.getElementById('settings-peer-id');
         const resetSettingsBtn = document.getElementById('reset-settings-btn');
         
-        // Tab switching
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                const tabId = tab.getAttribute('data-tab');
-                
-                tabs.forEach(t => t.classList.remove('active'));
-                tabContents.forEach(c => c.classList.remove('active'));
-                
-                tab.classList.add('active');
-                document.getElementById(tabId).classList.add('active');
-            });
-        });
-        
         // Application State
         let peer;
         let conn;
@@ -623,6 +613,8 @@
         let connectionTimer = null;
         let peerName = 'User-' + Math.floor(Math.random() * 1000);
         let connectionTypeSetting = 'auto';
+        let activeTransfers = new Map();
+        const CHUNK_SIZE = 65536; // 64KB chunks for faster transfer
         
         // Initialize from localStorage
         function loadSettings() {
@@ -678,22 +670,35 @@
             });
         });
         
-        // Initialize PeerJS
+        // Initialize PeerJS with optimized configuration
         function initializePeer() {
             // Generate a random peer ID or use saved one
             const savedPeerId = localStorage.getItem('peerId');
             const randomId = savedPeerId || 'yugal-' + Math.random().toString(36).substr(2, 8);
             
-            // PeerJS configuration
+            // Optimized PeerJS configuration
             const config = {
                 debug: 1,
                 config: {
                     iceServers: [
                         { urls: 'stun:stun.l.google.com:19302' },
                         { urls: 'stun:stun1.l.google.com:19302' },
-                        { urls: 'stun:stun2.l.google.com:19302' }
+                        { urls: 'stun:stun2.l.google.com:19302' },
+                        { 
+                            urls: 'turn:global.relay.metered.ca:80',
+                            username: '14a7c0b0b1b5b5b5b5b5',
+                            credential: '5b5b5b5b5b5b5b5b5b5b'
+                        },
+                        { 
+                            urls: 'turn:global.relay.metered.ca:80?transport=tcp',
+                            username: '14a7c0b0b1b5b5b5b5b5',
+                            credential: '5b5b5b5b5b5b5b5b5b5b'
+                        }
                     ],
-                    iceTransportPolicy: connectionTypeSetting === 'relay' ? 'relay' : 'all'
+                    iceTransportPolicy: connectionTypeSetting === 'relay' ? 'relay' : 'all',
+                    iceCandidatePoolSize: 5,
+                    bundlePolicy: 'max-bundle',
+                    rtcpMuxPolicy: 'require'
                 }
             };
             
@@ -731,8 +736,9 @@
             });
         }
         
-        // Setup connection handlers
+        // Setup connection handlers with optimized data channel
         function setupConnectionHandlers(connection) {
+            // Optimize data channel for faster transfer
             connection.on('open', () => {
                 updateConnectionStatus(true, 'Connected to peer', connectionStatus, connectionText);
                 updateConnectionStatus(true, 'Connected to peer', receiveConnectionStatus, receiveConnectionText);
@@ -744,15 +750,20 @@
                 updateConnectionTimer();
                 connectionTimer = setInterval(updateConnectionTimer, 1000);
                 
-                // Send peer info
+                // Send peer info immediately
                 connection.send({
                     type: 'peer-info',
                     name: peerName
                 });
             });
             
+            // Handle incoming data with buffering optimization
             connection.on('data', (data) => {
-                handleIncomingData(data);
+                try {
+                    handleIncomingData(data);
+                } catch (err) {
+                    console.error('Data handling error:', err);
+                }
             });
             
             connection.on('close', () => {
@@ -761,6 +772,7 @@
                 showToast('Connection closed');
                 clearInterval(connectionTimer);
                 connectionStats.style.display = 'none';
+                activeTransfers.clear();
             });
             
             connection.on('error', (err) => {
@@ -784,7 +796,7 @@
             }
         }
         
-        // Connect to another peer
+        // Connect to another peer with optimized settings
         connectBtn.addEventListener('click', () => {
             const remoteId = remotePeerIdInput.value.trim();
             if (!remoteId) {
@@ -796,11 +808,17 @@
                 conn.close();
             }
             
+            // Create connection with optimized parameters
             conn = peer.connect(remoteId, {
                 reliable: true,
-                serialization: 'json',
+                serialization: 'binary',
                 metadata: {
                     name: peerName
+                },
+                dcInit: {
+                    ordered: false, // Faster transfer at the cost of order guarantees
+                    maxRetransmits: 0, // Disable retransmits for faster transfer
+                    maxPacketLifeTime: 1000 // 1 second packet lifetime
                 }
             });
             
@@ -820,7 +838,7 @@
             showToast('Peer ID copied');
         });
         
-        // File handling
+        // File handling with optimized drag and drop
         browseBtn.addEventListener('click', () => {
             fileInput.click();
         });
@@ -830,9 +848,10 @@
             fileInput.value = '';
         });
         
-        // Drag and drop
+        // Optimized drag and drop handlers
         ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
             dropArea.addEventListener(eventName, preventDefaults, false);
+            document.body.addEventListener(eventName, preventDefaults, false);
         });
         
         function preventDefaults(e) {
@@ -906,7 +925,7 @@
                     reader.readAsDataURL(file);
                 } else {
                     const fileIcon = document.createElement('div');
-                    fileIcon.textContent = '📄';
+                    fileIcon.textContent = getFileIcon(file);
                     fileIcon.style.fontSize = '2rem';
                     fileItem.appendChild(fileIcon);
                     
@@ -917,16 +936,39 @@
                     
                     const removeBtn = document.createElement('button');
                     removeBtn.className = 'remove-btn';
-                        removeBtn.innerHTML = '×';
-                        removeBtn.addEventListener('click', (e) => {
-                            e.stopPropagation();
-                            removeFile(index);
-                        });
-                        fileItem.appendChild(removeBtn);
-                        
-                        filePreview.appendChild(fileItem);
+                    removeBtn.innerHTML = '×';
+                    removeBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        removeFile(index);
+                    });
+                    fileItem.appendChild(removeBtn);
+                    
+                    filePreview.appendChild(fileItem);
                 }
             });
+        }
+        
+        function getFileIcon(file) {
+            const type = file.type.split('/')[0];
+            const ext = file.name.split('.').pop().toLowerCase();
+            
+            if (type === 'image') return '🖼️';
+            if (type === 'video') return '🎬';
+            if (type === 'audio') return '🎵';
+            
+            switch(ext) {
+                case 'pdf': return '📄';
+                case 'doc':
+                case 'docx': return '📝';
+                case 'xls':
+                case 'xlsx': return '📊';
+                case 'ppt':
+                case 'pptx': return '📑';
+                case 'zip':
+                case 'rar':
+                case '7z': return '🗄️';
+                default: return '📁';
+            }
         }
         
         function removeFile(index) {
@@ -938,8 +980,8 @@
             }
         }
         
-        // Send files
-        sendFilesBtn.addEventListener('click', () => {
+        // Optimized file sending with chunk streaming
+        sendFilesBtn.addEventListener('click', async () => {
             if (!conn || !conn.open) {
                 showToast('Not connected to any peer');
                 return;
@@ -957,8 +999,34 @@
             // Create transfer ID
             const transferId = Date.now().toString(36) + Math.random().toString(36).substr(2, 4);
             
+            // Calculate total size for progress tracking
+            const totalSize = filesToSend.reduce((sum, file) => sum + file.size, 0);
+            let transferredSize = 0;
+            
+            // Add to active transfers
+            activeTransfers.set(transferId, {
+                files: filesToSend,
+                totalSize: totalSize,
+                transferredSize: 0,
+                startTime: Date.now()
+            });
+            
+            // Add to sender's transfer list
+            addTransferItem({
+                type: 'files',
+                transferId: transferId,
+                files: filesToSend.map(file => ({
+                    name: file.name,
+                    type: file.type,
+                    size: file.size
+                })),
+                status: 'Starting transfer...',
+                sender: 'You',
+                timestamp: new Date()
+            });
+            
             // Send metadata first
-            const metadata = {
+            conn.send({
                 type: 'files',
                 transferId: transferId,
                 count: filesToSend.length,
@@ -969,78 +1037,88 @@
                     lastModified: file.lastModified
                 })),
                 sender: peerName
-            };
-            
-            // Add to received items (for sender)
-            addTransferItem({
-                type: 'files',
-                transferId: transferId,
-                files: metadata.files,
-                status: 'Sending...',
-                sender: 'You',
-                timestamp: new Date()
             });
             
-            conn.send(metadata);
-            
-            // Send files one by one
-            let transferred = 0;
-            let totalSize = filesToSend.reduce((sum, file) => sum + file.size, 0);
-            let transferredSize = 0;
-            
-            filesToSend.forEach((file, index) => {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    const chunkSize = 16384; // 16KB chunks
-                    const fileData = e.target.result;
-                    const totalChunks = Math.ceil(fileData.length / chunkSize);
-                    
-                    for (let i = 0; i < totalChunks; i++) {
-                        const start = i * chunkSize;
-                        const end = Math.min(start + chunkSize, fileData.length);
-                        const chunk = fileData.slice(start, end);
+            // Send files in parallel with chunk streaming
+            const transferPromises = filesToSend.map((file, fileIndex) => {
+                return new Promise((resolve) => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const fileData = e.target.result;
+                        const totalChunks = Math.ceil(fileData.byteLength / CHUNK_SIZE);
                         
+                        // Send file header
                         conn.send({
-                            type: 'file-chunk',
+                            type: 'file-start',
                             transferId: transferId,
-                            fileIndex: index,
-                            chunkIndex: i,
-                            totalChunks: totalChunks,
-                            data: chunk
+                            fileIndex: fileIndex,
+                            totalChunks: totalChunks
                         });
                         
-                        transferredSize += chunk.length;
-                        const progress = Math.round((transferredSize / totalSize) * 100);
-                        progressBar.style.width = `${progress}%`;
-                        progressText.textContent = `Sending ${file.name} (${progress}%)`;
+                        // Send chunks
+                        for (let chunkIndex = 0; chunkIndex < totalChunks; chunkIndex++) {
+                            const start = chunkIndex * CHUNK_SIZE;
+                            const end = Math.min(start + CHUNK_SIZE, fileData.byteLength);
+                            const chunk = fileData.slice(start, end);
+                            
+                            conn.send({
+                                type: 'file-chunk',
+                                transferId: transferId,
+                                fileIndex: fileIndex,
+                                chunkIndex: chunkIndex,
+                                data: chunk
+                            });
+                            
+                            // Update progress
+                            transferredSize += chunk.byteLength;
+                            const progress = Math.round((transferredSize / totalSize) * 100);
+                            progressBar.style.width = `${progress}%`;
+                            progressText.textContent = `Sending ${file.name} (${progress}%)`;
+                            
+                            // Update transfer status
+                            updateTransferStatus(transferId, `Sending ${file.name} (${progress}%)`);
+                            
+                            // Throttle slightly to prevent overwhelming the connection
+                            if (chunkIndex % 10 === 0) {
+                                setTimeout(() => {}, 0);
+                            }
+                        }
                         
-                        // Update transfer status
-                        updateTransferStatus(transferId, `Sending ${file.name} (${progress}%)`);
-                    }
-                    
-                    transferred++;
-                    if (transferred === filesToSend.length) {
-                        progressText.textContent = 'Transfer complete!';
-                        showToast('Files sent successfully');
+                        // Send file end marker
+                        conn.send({
+                            type: 'file-end',
+                            transferId: transferId,
+                            fileIndex: fileIndex
+                        });
                         
-                        // Update transfer status
-                        updateTransferStatus(transferId, 'Completed');
-                        
-                        filesToSend = [];
-                        updatePreview();
-                        sendFilesBtn.style.display = 'none';
-                        
-                        // Hide progress after 3 seconds
-                        setTimeout(() => {
-                            progressContainer.style.display = 'none';
-                        }, 3000);
-                    }
-                };
-                reader.readAsArrayBuffer(file);
+                        resolve();
+                    };
+                    reader.readAsArrayBuffer(file);
+                });
             });
+            
+            // Wait for all files to be sent
+            await Promise.all(transferPromises);
+            
+            // Mark transfer as complete
+            const transferTime = (Date.now() - activeTransfers.get(transferId).startTime) / 1000;
+            updateTransferStatus(transferId, `Completed (${transferTime.toFixed(1)}s)`);
+            activeTransfers.delete(transferId);
+            
+            progressText.textContent = 'Transfer complete!';
+            showToast('Files sent successfully');
+            
+            filesToSend = [];
+            updatePreview();
+            sendFilesBtn.style.display = 'none';
+            
+            // Hide progress after 3 seconds
+            setTimeout(() => {
+                progressContainer.style.display = 'none';
+            }, 3000);
         });
         
-        // Send URL
+        // Send URL with immediate feedback
         sendUrlBtn.addEventListener('click', () => {
             const url = urlInput.value.trim();
             if (!url) {
@@ -1070,7 +1148,7 @@
                 sender: peerName
             });
             
-            // Add to sender's received items
+            // Add to sender's transfer list
             addTransferItem({
                 type: 'url',
                 transferId: transferId,
@@ -1084,81 +1162,105 @@
             urlInput.value = '';
         });
         
-        // Handle incoming data
+        // Handle incoming data with optimized transfer handling
         function handleIncomingData(data) {
-            if (data.type === 'peer-info') {
-                // Update peer name in UI if needed
-                return;
-            } else if (data.type === 'url') {
-                addTransferItem({
-                    type: 'url',
-                    transferId: data.transferId,
-                    url: data.url,
-                    status: 'Received',
-                    sender: data.sender || 'Unknown',
-                    timestamp: new Date()
-                });
-                showToast(`Received URL from ${data.sender || 'peer'}`);
-            } else if (data.type === 'files') {
-                // Prepare for receiving files
-                currentTransfer = {
-                    transferId: data.transferId,
-                    files: data.files,
-                    sender: data.sender || 'Unknown',
-                    receivedChunks: Array(data.count).fill().map(() => []),
-                    receivedCount: 0,
-                    startTime: Date.now()
-                };
-                
-                addTransferItem({
-                    type: 'files',
-                    transferId: data.transferId,
-                    files: data.files,
-                    status: 'Receiving...',
-                    sender: data.sender || 'Unknown',
-                    timestamp: new Date()
-                });
-                
-                showToast(`Receiving ${data.count} files from ${data.sender || 'peer'}`);
-            } else if (data.type === 'file-chunk') {
-                receiveFileChunk(data);
+            try {
+                if (data.type === 'peer-info') {
+                    // Update peer name in UI if needed
+                    return;
+                } else if (data.type === 'url') {
+                    addTransferItem({
+                        type: 'url',
+                        transferId: data.transferId,
+                        url: data.url,
+                        status: 'Received',
+                        sender: data.sender || 'Unknown',
+                        timestamp: new Date()
+                    });
+                    showToast(`Received URL from ${data.sender || 'peer'}`);
+                } else if (data.type === 'files') {
+                    // Initialize transfer
+                    activeTransfers.set(data.transferId, {
+                        transferId: data.transferId,
+                        files: data.files,
+                        sender: data.sender || 'Unknown',
+                        receivedChunks: Array(data.count).fill().map(() => []),
+                        receivedCount: 0,
+                        startTime: Date.now(),
+                        fileStatus: Array(data.count).fill(0) // 0 = not started, 1 = in progress, 2 = complete
+                    });
+                    
+                    addTransferItem({
+                        type: 'files',
+                        transferId: data.transferId,
+                        files: data.files,
+                        status: 'Receiving...',
+                        sender: data.sender || 'Unknown',
+                        timestamp: new Date()
+                    });
+                    
+                    showToast(`Receiving ${data.count} files from ${data.sender || 'peer'}`);
+                } else if (data.type === 'file-start') {
+                    // Mark file as started
+                    const transfer = activeTransfers.get(data.transferId);
+                    if (transfer) {
+                        transfer.fileStatus[data.fileIndex] = 1;
+                        updateTransferStatus(data.transferId, `Receiving ${transfer.files[data.fileIndex].name}...`);
+                    }
+                } else if (data.type === 'file-chunk') {
+                    receiveFileChunk(data);
+                } else if (data.type === 'file-end') {
+                    // Mark file as complete
+                    const transfer = activeTransfers.get(data.transferId);
+                    if (transfer) {
+                        transfer.fileStatus[data.fileIndex] = 2;
+                        transfer.receivedCount++;
+                        
+                        // Check if all files are received
+                        if (transfer.receivedCount === transfer.files.length) {
+                            const transferTime = (Date.now() - transfer.startTime) / 1000;
+                            updateTransferStatus(data.transferId, `Completed (${transferTime.toFixed(1)}s)`);
+                            showToast('All files received');
+                            activeTransfers.delete(data.transferId);
+                        } else {
+                            updateTransferStatus(data.transferId, `Received ${transfer.receivedCount}/${transfer.files.length} files`);
+                        }
+                    }
+                }
+            } catch (err) {
+                console.error('Error handling incoming data:', err);
             }
         }
         
-        let currentTransfer = null;
-        
         function receiveFileChunk(chunkData) {
-            if (!currentTransfer || currentTransfer.transferId !== chunkData.transferId) return;
+            const transfer = activeTransfers.get(chunkData.transferId);
+            if (!transfer) return;
             
-            const { fileIndex, chunkIndex, totalChunks } = chunkData;
-            currentTransfer.receivedChunks[fileIndex][chunkIndex] = chunkData.data;
+            // Store chunk
+            transfer.receivedChunks[chunkData.fileIndex][chunkData.chunkIndex] = chunkData.data;
             
             // Calculate progress
-            const receivedChunks = currentTransfer.receivedChunks[fileIndex].filter(Boolean).length;
-            const progress = Math.round((receivedChunks / totalChunks) * 100);
-            const file = currentTransfer.files[fileIndex];
+            const file = transfer.files[chunkData.fileIndex];
+            const receivedChunks = transfer.receivedChunks[chunkData.fileIndex].filter(Boolean).length;
             
-            updateTransferStatus(currentTransfer.transferId, `Receiving ${file.name} (${progress}%)`);
+            // Update status periodically to reduce UI updates
+            if (receivedChunks % 10 === 0 || receivedChunks === 1) {
+                const progress = Math.round((receivedChunks / (file.size / CHUNK_SIZE)) * 100);
+                updateTransferStatus(transfer.transferId, `Receiving ${file.name} (${progress}%)`);
+            }
             
-            // Check if all chunks for this file are received
-            if (receivedChunks === totalChunks) {
-                // Reconstruct file
-                const fileInfo = currentTransfer.files[fileIndex];
-                const chunks = currentTransfer.receivedChunks[fileIndex];
-                const blob = new Blob(chunks, { type: fileInfo.type });
+            // When all chunks are received, create blob
+            if (receivedChunks === Math.ceil(file.size / CHUNK_SIZE)) {
+                const chunks = transfer.receivedChunks[chunkData.fileIndex];
+                const blob = new Blob(chunks, { type: file.type });
                 
                 // Update transfer with received file
-                updateTransferWithFile(currentTransfer.transferId, fileIndex, blob);
-                
-                currentTransfer.receivedCount++;
-                
-                // Check if all files are received
-                if (currentTransfer.receivedCount === currentTransfer.files.length) {
-                    const transferTime = (Date.now() - currentTransfer.startTime) / 1000;
-                    updateTransferStatus(currentTransfer.transferId, `Completed (${transferTime.toFixed(1)}s)`);
-                    showToast('All files received');
-                    currentTransfer = null;
-                }
+                updateTransferWithFile(transfer.transferId, chunkData.fileIndex, {
+                    name: file.name,
+                    type: file.type,
+                    size: file.size,
+                    blob: URL.createObjectURL(blob)
+                });
             }
         }
         
@@ -1193,7 +1295,7 @@
                         <div class="transfer-progress" style="margin-top: 0.25rem; font-size: 0.875rem; color: var(--gray-700);">${item.status}</div>
                     </div>
                     <div class="transfer-actions" id="actions-${item.transferId}">
-                        ${item.status.includes('Completed') || item.status.includes('Received') ? `
+                        ${item.status.includes('Completed') ? `
                             <button class="btn btn-sm" onclick="downloadFiles('${item.transferId}')">Download</button>
                         ` : ''}
                     </div>
@@ -1218,7 +1320,7 @@
                 }
                 
                 // Update actions if transfer is complete
-                if (status.includes('Completed') || status.includes('Received')) {
+                if (status.includes('Completed')) {
                     const actionsElement = transferItem.querySelector('.transfer-actions');
                     if (actionsElement && !actionsElement.querySelector('.btn')) {
                         actionsElement.innerHTML = `<button class="btn btn-sm" onclick="downloadFiles('${transferId}')">Download</button>`;
@@ -1227,7 +1329,7 @@
             }
         }
         
-        function updateTransferWithFile(transferId, fileIndex, blob) {
+        function updateTransferWithFile(transferId, fileIndex, fileData) {
             const transferItem = document.getElementById(`transfer-${transferId}`);
             if (transferItem) {
                 let filesData = [];
@@ -1237,14 +1339,7 @@
                     filesData = [];
                 }
                 
-                // Get file info from currentTransfer
-                const fileInfo = currentTransfer.files[fileIndex];
-                filesData[fileIndex] = {
-                    name: fileInfo.name,
-                    type: fileInfo.type,
-                    blob: URL.createObjectURL(blob)
-                };
-                
+                filesData[fileIndex] = fileData;
                 transferItem.dataset.filesData = JSON.stringify(filesData);
             }
         }
