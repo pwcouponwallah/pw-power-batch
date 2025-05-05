@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yugal Shares - Instant File Transfer</title>
+    <title>Yugal Shares - Ultra Fast File Transfer</title>
     <style>
         :root {
             --black: #000000;
@@ -17,6 +17,7 @@
             --green: #4CAF50;
             --red: #F44336;
             --yellow: #FFC107;
+            --blue: #2196F3;
         }
         
         * {
@@ -119,6 +120,11 @@
             font-size: 0.875rem;
         }
         
+        .btn-icon {
+            padding: 0.5rem;
+            min-width: 40px;
+        }
+        
         .input-group {
             margin-bottom: 1rem;
         }
@@ -132,7 +138,8 @@
         
         input[type="text"],
         input[type="file"],
-        textarea {
+        textarea,
+        select {
             width: 100%;
             padding: 0.75rem;
             border: 1px solid var(--gray-300);
@@ -142,7 +149,8 @@
         }
         
         input[type="text"]:focus,
-        textarea:focus {
+        textarea:focus,
+        select:focus {
             outline: none;
             border-color: var(--primary);
         }
@@ -303,6 +311,8 @@
         
         .transfer-actions {
             margin-left: 1rem;
+            display: flex;
+            gap: 0.5rem;
         }
         
         .settings-form {
@@ -403,6 +413,17 @@
             margin-left: 0.25rem;
         }
         
+        .save-location {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .save-location select {
+            flex: 1;
+        }
+        
         @media (max-width: 480px) {
             .container {
                 padding: 1rem;
@@ -420,6 +441,10 @@
                 padding: 0.75rem 1rem;
                 font-size: 0.875rem;
             }
+            
+            .transfer-actions {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
@@ -427,7 +452,7 @@
     <div class="container">
         <header>
             <h1>Yugal Shares</h1>
-            <p class="subtitle">Instant peer-to-peer file sharing</p>
+            <p class="subtitle">Ultra Fast Peer-to-Peer File Transfer</p>
         </header>
         
         <div class="tabs">
@@ -473,6 +498,10 @@
                     <div class="stat-item">
                         <span>⏱️</span>
                         <span id="connection-time">0s</span>
+                    </div>
+                    <div class="stat-item">
+                        <span>🚀</span>
+                        <span id="connection-speed">0 MB/s</span>
                     </div>
                 </div>
             </div>
@@ -549,6 +578,16 @@
                     </div>
                     
                     <div class="input-group">
+                        <label>Default Save Location</label>
+                        <select id="save-location">
+                            <option value="downloads">Downloads Folder</option>
+                            <option value="pictures">Pictures</option>
+                            <option value="documents">Documents</option>
+                            <option value="ask">Ask Each Time</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group">
                         <label>Connection Type</label>
                         <div>
                             <input type="radio" id="conn-type-auto" name="conn-type" checked>
@@ -558,6 +597,15 @@
                             <input type="radio" id="conn-type-relay" name="conn-type">
                             <label for="conn-type-relay" style="display: inline;">Force Relay (Slower but more reliable)</label>
                         </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Transfer Speed</label>
+                        <select id="transfer-speed">
+                            <option value="fast">Fast (64KB chunks)</option>
+                            <option value="faster">Faster (128KB chunks)</option>
+                            <option value="fastest">Fastest (256KB chunks)</option>
+                        </select>
                     </div>
                     
                     <button class="btn" id="reset-settings-btn">Reset Settings</button>
@@ -600,8 +648,11 @@
         const connectionStats = document.getElementById('connection-stats');
         const connectionType = document.getElementById('connection-type');
         const connectionTime = document.getElementById('connection-time');
+        const connectionSpeed = document.getElementById('connection-speed');
         const settingsPeerName = document.getElementById('settings-peer-name');
         const settingsPeerId = document.getElementById('settings-peer-id');
+        const saveLocation = document.getElementById('save-location');
+        const transferSpeed = document.getElementById('transfer-speed');
         const resetSettingsBtn = document.getElementById('reset-settings-btn');
         
         // Application State
@@ -611,10 +662,14 @@
         let filesToSend = [];
         let connectionStartTime = 0;
         let connectionTimer = null;
+        let speedTimer = null;
+        let lastBytesTransferred = 0;
         let peerName = 'User-' + Math.floor(Math.random() * 1000);
         let connectionTypeSetting = 'auto';
+        let defaultSaveLocation = 'downloads';
+        let chunkSize = 65536; // 64KB by default
         let activeTransfers = new Map();
-        const CHUNK_SIZE = 65536; // 64KB chunks for faster transfer
+        let fileSystemHandle;
         
         // Initialize from localStorage
         function loadSettings() {
@@ -630,12 +685,36 @@
                 connectionTypeSetting = savedConnType;
                 document.getElementById(`conn-type-${savedConnType}`).checked = true;
             }
+            
+            const savedLocation = localStorage.getItem('saveLocation');
+            if (savedLocation) {
+                defaultSaveLocation = savedLocation;
+                saveLocation.value = savedLocation;
+            }
+            
+            const savedSpeed = localStorage.getItem('transferSpeed');
+            if (savedSpeed) {
+                transferSpeed.value = savedSpeed;
+                updateChunkSize(savedSpeed);
+            }
+        }
+        
+        // Update chunk size based on speed setting
+        function updateChunkSize(speed) {
+            switch(speed) {
+                case 'fast': chunkSize = 65536; break; // 64KB
+                case 'faster': chunkSize = 131072; break; // 128KB
+                case 'fastest': chunkSize = 262144; break; // 256KB
+                default: chunkSize = 65536;
+            }
         }
         
         // Save settings
         function saveSettings() {
             localStorage.setItem('peerName', peerName);
             localStorage.setItem('connectionType', connectionTypeSetting);
+            localStorage.setItem('saveLocation', defaultSaveLocation);
+            localStorage.setItem('transferSpeed', transferSpeed.value);
         }
         
         // Reset settings
@@ -646,6 +725,10 @@
             settingsPeerName.value = peerName;
             connectionTypeSetting = 'auto';
             document.getElementById('conn-type-auto').checked = true;
+            defaultSaveLocation = 'downloads';
+            saveLocation.value = 'downloads';
+            transferSpeed.value = 'fast';
+            updateChunkSize('fast');
             showToast('Settings reset');
         });
         
@@ -668,6 +751,18 @@
                 connectionTypeSetting = radio.id.replace('conn-type-', '');
                 saveSettings();
             });
+        });
+        
+        // Update save location
+        saveLocation.addEventListener('change', () => {
+            defaultSaveLocation = saveLocation.value;
+            saveSettings();
+        });
+        
+        // Update transfer speed
+        transferSpeed.addEventListener('change', () => {
+            updateChunkSize(transferSpeed.value);
+            saveSettings();
         });
         
         // Initialize PeerJS with optimized configuration
@@ -744,11 +839,13 @@
                 updateConnectionStatus(true, 'Connected to peer', receiveConnectionStatus, receiveConnectionText);
                 showToast(`Connected to ${connection.metadata.name || 'peer'}`);
                 
-                // Start connection timer
+                // Start connection timer and speed monitor
                 connectionStartTime = Date.now();
+                lastBytesTransferred = 0;
                 connectionStats.style.display = 'flex';
                 updateConnectionTimer();
                 connectionTimer = setInterval(updateConnectionTimer, 1000);
+                speedTimer = setInterval(updateConnectionSpeed, 1000);
                 
                 // Send peer info immediately
                 connection.send({
@@ -771,6 +868,7 @@
                 updateConnectionStatus(false, 'Disconnected', receiveConnectionStatus, receiveConnectionText);
                 showToast('Connection closed');
                 clearInterval(connectionTimer);
+                clearInterval(speedTimer);
                 connectionStats.style.display = 'none';
                 activeTransfers.clear();
             });
@@ -793,6 +891,25 @@
                     const usingRelay = conn.connection.getConfiguration().iceTransportPolicy === 'relay';
                     connectionType.textContent = usingRelay ? 'Relay' : 'Direct';
                 }
+            }
+        }
+        
+        // Update connection speed
+        function updateConnectionSpeed() {
+            if (conn && conn._dc) {
+                const stats = conn._dc.getStats();
+                stats.then(report => {
+                    for (const stat of report.values()) {
+                        if (stat.type === 'data-channel') {
+                            const bytesTransferred = stat.bytesReceived + stat.bytesSent;
+                            const bytesDelta = bytesTransferred - lastBytesTransferred;
+                            const speedMB = (bytesDelta / (1024 * 1024)).toFixed(2);
+                            connectionSpeed.textContent = `${speedMB} MB/s`;
+                            lastBytesTransferred = bytesTransferred;
+                            break;
+                        }
+                    }
+                });
             }
         }
         
@@ -1045,7 +1162,7 @@
                     const reader = new FileReader();
                     reader.onload = (e) => {
                         const fileData = e.target.result;
-                        const totalChunks = Math.ceil(fileData.byteLength / CHUNK_SIZE);
+                        const totalChunks = Math.ceil(fileData.byteLength / chunkSize);
                         
                         // Send file header
                         conn.send({
@@ -1057,8 +1174,8 @@
                         
                         // Send chunks
                         for (let chunkIndex = 0; chunkIndex < totalChunks; chunkIndex++) {
-                            const start = chunkIndex * CHUNK_SIZE;
-                            const end = Math.min(start + CHUNK_SIZE, fileData.byteLength);
+                            const start = chunkIndex * chunkSize;
+                            const end = Math.min(start + chunkSize, fileData.byteLength);
                             const chunk = fileData.slice(start, end);
                             
                             conn.send({
@@ -1245,12 +1362,12 @@
             
             // Update status periodically to reduce UI updates
             if (receivedChunks % 10 === 0 || receivedChunks === 1) {
-                const progress = Math.round((receivedChunks / (file.size / CHUNK_SIZE)) * 100);
+                const progress = Math.round((receivedChunks / (file.size / chunkSize)) * 100);
                 updateTransferStatus(transfer.transferId, `Receiving ${file.name} (${progress}%)`);
             }
             
             // When all chunks are received, create blob
-            if (receivedChunks === Math.ceil(file.size / CHUNK_SIZE)) {
+            if (receivedChunks === Math.ceil(file.size / chunkSize)) {
                 const chunks = transfer.receivedChunks[chunkData.fileIndex];
                 const blob = new Blob(chunks, { type: file.type });
                 
@@ -1259,7 +1376,7 @@
                     name: file.name,
                     type: file.type,
                     size: file.size,
-                    blob: URL.createObjectURL(blob)
+                    blob: blob
                 });
             }
         }
@@ -1297,6 +1414,7 @@
                     <div class="transfer-actions" id="actions-${item.transferId}">
                         ${item.status.includes('Completed') ? `
                             <button class="btn btn-sm" onclick="downloadFiles('${item.transferId}')">Download</button>
+                            <button class="btn btn-sm btn-outline" onclick="saveFiles('${item.transferId}')">Save As...</button>
                         ` : ''}
                     </div>
                 `;
@@ -1323,7 +1441,10 @@
                 if (status.includes('Completed')) {
                     const actionsElement = transferItem.querySelector('.transfer-actions');
                     if (actionsElement && !actionsElement.querySelector('.btn')) {
-                        actionsElement.innerHTML = `<button class="btn btn-sm" onclick="downloadFiles('${transferId}')">Download</button>`;
+                        actionsElement.innerHTML = `
+                            <button class="btn btn-sm" onclick="downloadFiles('${transferId}')">Download</button>
+                            <button class="btn btn-sm btn-outline" onclick="saveFiles('${transferId}')">Save As...</button>
+                        `;
                     }
                 }
             }
@@ -1352,8 +1473,9 @@
                 
                 filesData.forEach(file => {
                     if (file.blob) {
+                        const url = URL.createObjectURL(file.blob);
                         const a = document.createElement('a');
-                        a.href = file.blob;
+                        a.href = url;
                         a.download = file.name;
                         a.style.display = 'none';
                         document.body.appendChild(a);
@@ -1361,9 +1483,62 @@
                         document.body.removeChild(a);
                         
                         // Revoke the blob URL after download
-                        setTimeout(() => URL.revokeObjectURL(file.blob), 100);
+                        setTimeout(() => URL.revokeObjectURL(url), 100);
                     }
                 });
+            }
+        };
+        
+        // Global function for saving files with File System Access API
+        window.saveFiles = async function(transferId) {
+            try {
+                const transferItem = document.getElementById(`transfer-${transferId}`);
+                if (!transferItem) return;
+                
+                const filesData = JSON.parse(transferItem.dataset.filesData || '[]');
+                
+                // Check if File System Access API is available
+                if ('showSaveFilePicker' in window) {
+                    for (const file of filesData) {
+                        if (file.blob) {
+                            try {
+                                // Create a handle to a new file
+                                const handle = await window.showSaveFilePicker({
+                                    suggestedName: file.name,
+                                    types: [{
+                                        description: 'Files',
+                                        accept: {
+                                            [file.type]: [`.${file.name.split('.').pop()}`]
+                                        }
+                                    }]
+                                });
+                                
+                                // Create a FileSystemWritableFileStream to write to
+                                const writableStream = await handle.createWritable();
+                                
+                                // Write the file content
+                                await writableStream.write(file.blob);
+                                
+                                // Close the file and write the contents to disk
+                                await writableStream.close();
+                                
+                                showToast(`${file.name} saved successfully`);
+                            } catch (err) {
+                                console.error('Error saving file:', err);
+                                if (err.name !== 'AbortError') {
+                                    showToast('Error saving file');
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    // Fallback to download if File System Access API not available
+                    downloadFiles(transferId);
+                    showToast('Your browser doesn\'t support direct file saving. Files downloaded instead.');
+                }
+            } catch (err) {
+                console.error('Error in saveFiles:', err);
+                showToast('Error saving files');
             }
         };
         
