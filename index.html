@@ -3,177 +3,235 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yugal Shares - Peer-to-Peer File Sharing</title>
+    <title>Yugal Shares - Secure File Transfer</title>
     <style>
         :root {
-            --primary: #6c5ce7;
-            --secondary: #a29bfe;
-            --dark: #2d3436;
-            --light: #f5f6fa;
-            --success: #00b894;
-            --warning: #fdcb6e;
-            --danger: #d63031;
+            --black: #000000;
+            --white: #ffffff;
+            --gray-100: #f5f5f5;
+            --gray-200: #eeeeee;
+            --gray-300: #e0e0e0;
+            --gray-700: #616161;
+            --primary: #000000;
+            --secondary: #333333;
         }
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
         }
         
         body {
-            background-color: var(--light);
-            color: var(--dark);
+            background-color: var(--white);
+            color: var(--black);
             line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
         }
         
         .container {
-            max-width: 800px;
+            max-width: 100%;
+            width: 100%;
+            padding: 1rem;
             margin: 0 auto;
-            padding: 2rem;
+        }
+        
+        @media (min-width: 768px) {
+            .container {
+                max-width: 800px;
+                padding: 2rem;
+            }
         }
         
         header {
             text-align: center;
             margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--gray-200);
         }
         
         h1 {
             color: var(--primary);
             margin-bottom: 0.5rem;
-            font-size: 2.5rem;
+            font-size: 2rem;
+            font-weight: 700;
         }
         
         .subtitle {
-            color: var(--dark);
-            opacity: 0.8;
+            color: var(--gray-700);
             margin-bottom: 1.5rem;
-        }
-        
-        .tabs {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 1.5rem;
-            border-bottom: 1px solid #ddd;
-        }
-        
-        .tab {
-            padding: 0.75rem 1.5rem;
-            cursor: pointer;
-            background: none;
-            border: none;
             font-size: 1rem;
-            font-weight: 600;
-            color: var(--dark);
-            opacity: 0.7;
-            transition: all 0.3s ease;
-            position: relative;
         }
         
-        .tab.active {
-            opacity: 1;
-            color: var(--primary);
-        }
-        
-        .tab.active::after {
-            content: '';
-            position: absolute;
-            bottom: -1px;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background-color: var(--primary);
-        }
-        
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
-        
-        .tab-content.active {
-            display: block;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .drop-area {
-            border: 3px dashed var(--secondary);
-            border-radius: 10px;
-            padding: 2rem;
-            text-align: center;
+        .card {
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 1.5rem;
             margin-bottom: 1.5rem;
-            transition: all 0.3s ease;
-            background-color: white;
+            border: 1px solid var(--gray-200);
         }
         
-        .drop-area.highlight {
-            border-color: var(--primary);
-            background-color: rgba(108, 92, 231, 0.1);
-        }
-        
-        .drop-area p {
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
             margin-bottom: 1rem;
+            color: var(--primary);
         }
         
         .btn {
             background-color: var(--primary);
-            color: white;
+            color: var(--white);
             border: none;
             padding: 0.75rem 1.5rem;
-            border-radius: 5px;
+            border-radius: 6px;
             cursor: pointer;
             font-size: 1rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            display: inline-block;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
         }
         
         .btn:hover {
-            background-color: #5649c0;
-            transform: translateY(-2px);
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
         }
         
         .btn-outline {
             background-color: transparent;
-            border: 2px solid var(--primary);
+            border: 1px solid var(--primary);
             color: var(--primary);
         }
         
-        .btn-outline:hover {
-            background-color: var(--primary);
-            color: white;
+        .btn-sm {
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
         }
         
-        .preview-container {
+        .input-group {
+            margin-bottom: 1rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--secondary);
+        }
+        
+        input[type="text"],
+        input[type="file"],
+        textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--gray-300);
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border 0.2s ease;
+        }
+        
+        input[type="text"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+            background-color: #ccc;
+        }
+        
+        .status-dot.connected {
+            background-color: #4CAF50;
+        }
+        
+        .status-dot.disconnected {
+            background-color: #F44336;
+        }
+        
+        .status-dot.pending {
+            background-color: #FFC107;
+        }
+        
+        .drop-area {
+            border: 2px dashed var(--gray-300);
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            transition: all 0.2s ease;
+            background-color: var(--gray-100);
+            cursor: pointer;
+        }
+        
+        .drop-area.highlight {
+            border-color: var(--primary);
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+        
+        .file-preview {
             display: flex;
             flex-wrap: wrap;
             gap: 1rem;
             margin-bottom: 1.5rem;
         }
         
-        .preview-item {
+        .file-item {
             position: relative;
-            border-radius: 5px;
+            border-radius: 6px;
             overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 100px;
+            height: 100px;
+            background-color: var(--gray-100);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
-        .preview-item img {
-            max-width: 100px;
-            max-height: 100px;
-            display: block;
+        .file-item img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
         }
         
-        .preview-item .remove-btn {
+        .file-item .file-name {
             position: absolute;
-            top: 5px;
-            right: 5px;
-            background-color: var(--danger);
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.7);
             color: white;
+            padding: 0.25rem;
+            font-size: 0.75rem;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .file-item .remove-btn {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: var(--black);
             border: none;
             width: 20px;
             height: 20px;
@@ -183,83 +241,7 @@
             justify-content: center;
             cursor: pointer;
             font-size: 12px;
-        }
-        
-        .url-input {
-            width: 100%;
-            padding: 0.75rem;
-            border: 2px solid #ddd;
-            border-radius: 5px;
-            font-size: 1rem;
-            margin-bottom: 1rem;
-        }
-        
-        .connection-panel {
-            background-color: white;
-            border-radius: 10px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        .connection-status {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-        
-        .status-indicator {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            margin-right: 0.5rem;
-            background-color: #ccc;
-        }
-        
-        .status-indicator.connected {
-            background-color: var(--success);
-        }
-        
-        .peer-id-container {
-            display: flex;
-            margin-bottom: 1rem;
-        }
-        
-        #peer-id {
-            flex: 1;
-            padding: 0.75rem;
-            border: 2px solid #ddd;
-            border-radius: 5px 0 0 5px;
-            font-family: monospace;
-        }
-        
-        #copy-peer-id {
-            border-radius: 0 5px 5px 0;
-            border-left: none;
-        }
-        
-        .connect-form {
-            display: flex;
-            gap: 0.5rem;
-        }
-        
-        #remote-peer-id {
-            flex: 1;
-            padding: 0.75rem;
-            border: 2px solid #ddd;
-            border-radius: 5px;
-        }
-        
-        .transfer-section {
-            background-color: white;
-            border-radius: 10px;
-            padding: 1.5rem;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        .transfer-section h3 {
-            margin-bottom: 1rem;
-            color: var(--primary);
+            font-weight: bold;
         }
         
         .progress-container {
@@ -268,9 +250,9 @@
         }
         
         .progress-bar {
-            height: 10px;
-            background-color: #eee;
-            border-radius: 5px;
+            height: 6px;
+            background-color: var(--gray-200);
+            border-radius: 3px;
             overflow: hidden;
             margin-bottom: 0.5rem;
         }
@@ -282,68 +264,158 @@
             transition: width 0.3s ease;
         }
         
-        .received-items {
-            margin-top: 2rem;
+        .transfer-list {
+            margin-top: 1.5rem;
         }
         
-        .received-item {
-            background-color: white;
-            border-radius: 10px;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        .transfer-item {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            padding: 0.75rem;
+            border-bottom: 1px solid var(--gray-200);
         }
         
-        .received-item img {
-            max-width: 60px;
-            max-height: 60px;
-            border-radius: 5px;
+        .transfer-item:last-child {
+            border-bottom: none;
         }
         
-        .received-item-info {
+        .transfer-icon {
+            margin-right: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .transfer-info {
             flex: 1;
         }
         
-        .received-item-actions a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
+        .transfer-name {
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+        
+        .transfer-status {
+            font-size: 0.875rem;
+            color: var(--gray-700);
+        }
+        
+        .transfer-actions {
+            margin-left: 1rem;
+        }
+        
+        .settings-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
         }
         
         .toast {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: var(--dark);
-            color: white;
-            padding: 1rem;
-            border-radius: 5px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            transform: translateY(100px);
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background-color: var(--black);
+            color: var(--white);
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             opacity: 0;
             transition: all 0.3s ease;
             z-index: 1000;
+            max-width: 90%;
+            text-align: center;
         }
         
         .toast.show {
-            transform: translateY(0);
+            transform: translateX(-50%) translateY(0);
             opacity: 1;
         }
         
-        @media (max-width: 600px) {
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--gray-200);
+            margin-bottom: 1.5rem;
+        }
+        
+        .tab {
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--gray-700);
+            position: relative;
+            transition: all 0.2s ease;
+        }
+        
+        .tab.active {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 2rem;
+            color: var(--gray-700);
+        }
+        
+        .connection-stats {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            font-size: 0.875rem;
+            color: var(--gray-700);
+        }
+        
+        .stat-item {
+            display: flex;
+            align-items: center;
+        }
+        
+        .stat-item span {
+            margin-left: 0.25rem;
+        }
+        
+        @media (max-width: 480px) {
             .container {
                 padding: 1rem;
             }
             
-            h1 {
-                font-size: 2rem;
+            .card {
+                padding: 1rem;
             }
             
-            .connect-form {
-                flex-direction: column;
+            .drop-area {
+                padding: 1.5rem;
+            }
+            
+            .tab {
+                padding: 0.75rem 1rem;
+                font-size: 0.875rem;
             }
         }
     </style>
@@ -352,74 +424,140 @@
     <div class="container">
         <header>
             <h1>Yugal Shares</h1>
-            <p class="subtitle">Peer-to-peer file sharing without server storage</p>
+            <p class="subtitle">Secure peer-to-peer file sharing</p>
         </header>
         
         <div class="tabs">
-            <button class="tab active" data-tab="send">Send Files</button>
-            <button class="tab" data-tab="receive">Receive Files</button>
+            <button class="tab active" data-tab="share">Share</button>
+            <button class="tab" data-tab="receive">Receive</button>
+            <button class="tab" data-tab="settings">Settings</button>
         </div>
         
-        <div class="tab-content active" id="send">
-            <div class="connection-panel">
-                <div class="connection-status">
-                    <div class="status-indicator" id="connection-status"></div>
+        <div class="tab-content active" id="share">
+            <div class="card">
+                <h2 class="card-title">Connection</h2>
+                <div class="status-indicator">
+                    <div class="status-dot" id="connection-status"></div>
                     <span id="connection-text">Disconnected</span>
                 </div>
                 
-                <div class="peer-id-container">
-                    <input type="text" id="peer-id" readonly placeholder="Your ID will appear here when connected">
-                    <button class="btn" id="copy-peer-id">Copy</button>
+                <div class="input-group">
+                    <label for="peer-name">Your Display Name</label>
+                    <input type="text" id="peer-name" placeholder="Enter your name">
                 </div>
                 
-                <div class="connect-form">
-                    <input type="text" id="remote-peer-id" placeholder="Enter recipient's ID">
-                    <button class="btn" id="connect-btn">Connect</button>
+                <div class="input-group">
+                    <label for="peer-id">Your Connection ID</label>
+                    <div style="display: flex;">
+                        <input type="text" id="peer-id" readonly placeholder="Generating...">
+                        <button class="btn btn-sm" id="copy-peer-id" style="margin-left: 0.5rem;">Copy</button>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="remote-peer-id">Connect to Peer</label>
+                    <div style="display: flex;">
+                        <input type="text" id="remote-peer-id" placeholder="Enter peer's connection ID">
+                        <button class="btn btn-sm" id="connect-btn" style="margin-left: 0.5rem;">Connect</button>
+                    </div>
+                </div>
+                
+                <div class="connection-stats" id="connection-stats" style="display: none;">
+                    <div class="stat-item">
+                        <span>📶</span>
+                        <span id="connection-type">-</span>
+                    </div>
+                    <div class="stat-item">
+                        <span>⏱️</span>
+                        <span id="connection-time">0s</span>
+                    </div>
                 </div>
             </div>
             
-            <div class="drop-area" id="drop-area">
-                <p>Drag & drop files here or click to browse</p>
-                <button class="btn" id="browse-btn">Select Files</button>
-                <input type="file" id="file-input" multiple style="display: none;">
-            </div>
-            
-            <div class="preview-container" id="preview-container"></div>
-            
-            <div class="transfer-section">
-                <h3>Send URL</h3>
-                <input type="text" class="url-input" id="url-input" placeholder="Enter URL to share">
-                <button class="btn" id="send-url-btn">Send URL</button>
+            <div class="card">
+                <h2 class="card-title">Share Files</h2>
+                <div class="drop-area" id="drop-area">
+                    <p>Drag & drop files here or click to browse</p>
+                    <button class="btn btn-outline" id="browse-btn">Select Files</button>
+                    <input type="file" id="file-input" multiple style="display: none;">
+                </div>
+                
+                <div class="file-preview" id="file-preview"></div>
                 
                 <div class="progress-container" id="progress-container">
-                    <h3>Transfer Progress</h3>
                     <div class="progress-bar">
                         <div class="progress" id="progress-bar"></div>
                     </div>
                     <div id="progress-text">Preparing transfer...</div>
                 </div>
                 
-                <button class="btn" id="send-files-btn" style="display: none;">Send Files</button>
+                <button class="btn" id="send-files-btn" style="display: none; width: 100%;">Send Files</button>
+            </div>
+            
+            <div class="card">
+                <h2 class="card-title">Share URL</h2>
+                <div class="input-group">
+                    <input type="text" id="url-input" placeholder="Enter URL to share">
+                </div>
+                <button class="btn" id="send-url-btn" style="width: 100%;">Send URL</button>
             </div>
         </div>
         
         <div class="tab-content" id="receive">
-            <div class="connection-panel">
-                <div class="connection-status">
-                    <div class="status-indicator" id="receive-connection-status"></div>
+            <div class="card">
+                <h2 class="card-title">Connection</h2>
+                <div class="status-indicator">
+                    <div class="status-dot" id="receive-connection-status"></div>
                     <span id="receive-connection-text">Disconnected</span>
                 </div>
                 
-                <div class="peer-id-container">
-                    <input type="text" id="receive-peer-id" readonly placeholder="Your ID will appear here when connected">
-                    <button class="btn" id="copy-receive-peer-id">Copy</button>
+                <div class="input-group">
+                    <label for="receive-peer-id">Your Connection ID</label>
+                    <div style="display: flex;">
+                        <input type="text" id="receive-peer-id" readonly placeholder="Generating...">
+                        <button class="btn btn-sm" id="copy-receive-peer-id" style="margin-left: 0.5rem;">Copy</button>
+                    </div>
                 </div>
             </div>
             
-            <div class="transfer-section">
-                <h3>Received Items</h3>
-                <div class="received-items" id="received-items">
-                    <p id="no-items-message">No items received yet. Share your ID to receive files.</p>
+            <div class="card">
+                <h2 class="card-title">Received Items</h2>
+                <div class="transfer-list" id="received-items">
+                    <div class="empty-state" id="no-items-message">
+                        <p>No items received yet</p>
+                        <p>Share your ID to receive files</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tab-content" id="settings">
+            <div class="card">
+                <h2 class="card-title">Settings</h2>
+                <div class="settings-form">
+                    <div class="input-group">
+                        <label for="settings-peer-name">Display Name</label>
+                        <input type="text" id="settings-peer-name" placeholder="Enter your name">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="settings-peer-id">Connection ID</label>
+                        <input type="text" id="settings-peer-id" readonly>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Connection Type</label>
+                        <div>
+                            <input type="radio" id="conn-type-auto" name="conn-type" checked>
+                            <label for="conn-type-auto" style="display: inline;">Auto (Recommended)</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="conn-type-relay" name="conn-type">
+                            <label for="conn-type-relay" style="display: inline;">Force Relay (Slower but more reliable)</label>
+                        </div>
+                    </div>
+                    
+                    <button class="btn" id="reset-settings-btn">Reset Settings</button>
                 </div>
             </div>
         </div>
@@ -435,7 +573,7 @@
         const dropArea = document.getElementById('drop-area');
         const browseBtn = document.getElementById('browse-btn');
         const fileInput = document.getElementById('file-input');
-        const previewContainer = document.getElementById('preview-container');
+        const filePreview = document.getElementById('file-preview');
         const sendFilesBtn = document.getElementById('send-files-btn');
         const urlInput = document.getElementById('url-input');
         const sendUrlBtn = document.getElementById('send-url-btn');
@@ -444,6 +582,7 @@
         const progressText = document.getElementById('progress-text');
         const connectionStatus = document.getElementById('connection-status');
         const connectionText = document.getElementById('connection-text');
+        const peerNameInput = document.getElementById('peer-name');
         const peerIdInput = document.getElementById('peer-id');
         const copyPeerIdBtn = document.getElementById('copy-peer-id');
         const remotePeerIdInput = document.getElementById('remote-peer-id');
@@ -455,6 +594,12 @@
         const receivedItemsContainer = document.getElementById('received-items');
         const noItemsMessage = document.getElementById('no-items-message');
         const toast = document.getElementById('toast');
+        const connectionStats = document.getElementById('connection-stats');
+        const connectionType = document.getElementById('connection-type');
+        const connectionTime = document.getElementById('connection-time');
+        const settingsPeerName = document.getElementById('settings-peer-name');
+        const settingsPeerId = document.getElementById('settings-peer-id');
+        const resetSettingsBtn = document.getElementById('reset-settings-btn');
         
         // Tab switching
         tabs.forEach(tab => {
@@ -469,65 +614,175 @@
             });
         });
         
-        // PeerJS setup
+        // Application State
         let peer;
         let conn;
         let currentPeerId;
         let filesToSend = [];
+        let connectionStartTime = 0;
+        let connectionTimer = null;
+        let peerName = 'User-' + Math.floor(Math.random() * 1000);
+        let connectionTypeSetting = 'auto';
         
+        // Initialize from localStorage
+        function loadSettings() {
+            const savedName = localStorage.getItem('peerName');
+            if (savedName) {
+                peerName = savedName;
+                peerNameInput.value = savedName;
+                settingsPeerName.value = savedName;
+            }
+            
+            const savedConnType = localStorage.getItem('connectionType');
+            if (savedConnType) {
+                connectionTypeSetting = savedConnType;
+                document.getElementById(`conn-type-${savedConnType}`).checked = true;
+            }
+        }
+        
+        // Save settings
+        function saveSettings() {
+            localStorage.setItem('peerName', peerName);
+            localStorage.setItem('connectionType', connectionTypeSetting);
+        }
+        
+        // Reset settings
+        resetSettingsBtn.addEventListener('click', () => {
+            localStorage.clear();
+            peerName = 'User-' + Math.floor(Math.random() * 1000);
+            peerNameInput.value = peerName;
+            settingsPeerName.value = peerName;
+            connectionTypeSetting = 'auto';
+            document.getElementById('conn-type-auto').checked = true;
+            showToast('Settings reset');
+        });
+        
+        // Update peer name
+        peerNameInput.addEventListener('change', () => {
+            peerName = peerNameInput.value.trim() || 'User-' + Math.floor(Math.random() * 1000);
+            settingsPeerName.value = peerName;
+            saveSettings();
+        });
+        
+        settingsPeerName.addEventListener('change', () => {
+            peerName = settingsPeerName.value.trim() || 'User-' + Math.floor(Math.random() * 1000);
+            peerNameInput.value = peerName;
+            saveSettings();
+        });
+        
+        // Update connection type
+        document.querySelectorAll('input[name="conn-type"]').forEach(radio => {
+            radio.addEventListener('change', () => {
+                connectionTypeSetting = radio.id.replace('conn-type-', '');
+                saveSettings();
+            });
+        });
+        
+        // Initialize PeerJS
         function initializePeer() {
-            // Generate a random peer ID
-            const randomId = 'yugal-' + Math.random().toString(36).substr(2, 8);
-            peer = new Peer(randomId);
+            // Generate a random peer ID or use saved one
+            const savedPeerId = localStorage.getItem('peerId');
+            const randomId = savedPeerId || 'yugal-' + Math.random().toString(36).substr(2, 8);
+            
+            // PeerJS configuration
+            const config = {
+                debug: 1,
+                config: {
+                    iceServers: [
+                        { urls: 'stun:stun.l.google.com:19302' },
+                        { urls: 'stun:stun1.l.google.com:19302' },
+                        { urls: 'stun:stun2.l.google.com:19302' }
+                    ],
+                    iceTransportPolicy: connectionTypeSetting === 'relay' ? 'relay' : 'all'
+                }
+            };
+            
+            peer = new Peer(randomId, config);
             
             peer.on('open', (id) => {
                 currentPeerId = id;
                 peerIdInput.value = id;
                 receivePeerIdInput.value = id;
+                settingsPeerId.value = id;
                 updateConnectionStatus(true, 'Connected', connectionStatus, connectionText);
                 updateConnectionStatus(true, 'Connected', receiveConnectionStatus, receiveConnectionText);
+                
+                // Save peer ID if not already saved
+                if (!savedPeerId) {
+                    localStorage.setItem('peerId', id);
+                }
             });
             
             peer.on('error', (err) => {
                 console.error('Peer error:', err);
-                showToast('Connection error: ' + err.message);
+                showToast(`Error: ${err.type || err.message}`);
                 updateConnectionStatus(false, 'Disconnected', connectionStatus, connectionText);
                 updateConnectionStatus(false, 'Disconnected', receiveConnectionStatus, receiveConnectionText);
             });
             
-            peer.on('disconnected', () => {
-                updateConnectionStatus(false, 'Disconnected', connectionStatus, connectionText);
-                updateConnectionStatus(false, 'Disconnected', receiveConnectionStatus, receiveConnectionText);
-                setTimeout(() => initializePeer(), 5000); // Try to reconnect
-            });
-            
-            // Handle incoming connections
             peer.on('connection', (connection) => {
+                // Close existing connection if any
+                if (conn && conn.open) {
+                    conn.close();
+                }
+                
                 conn = connection;
-                
-                conn.on('open', () => {
-                    updateConnectionStatus(true, 'Connected to peer', connectionStatus, connectionText);
-                    showToast('Connected to peer');
-                });
-                
-                conn.on('data', (data) => {
-                    handleIncomingData(data);
-                });
-                
-                conn.on('close', () => {
-                    updateConnectionStatus(false, 'Disconnected', connectionStatus, connectionText);
-                    showToast('Connection closed');
-                });
-                
-                conn.on('error', (err) => {
-                    console.error('Connection error:', err);
-                    showToast('Connection error: ' + err.message);
-                });
+                setupConnectionHandlers(conn);
             });
         }
         
-        // Initialize PeerJS
-        initializePeer();
+        // Setup connection handlers
+        function setupConnectionHandlers(connection) {
+            connection.on('open', () => {
+                updateConnectionStatus(true, 'Connected to peer', connectionStatus, connectionText);
+                updateConnectionStatus(true, 'Connected to peer', receiveConnectionStatus, receiveConnectionText);
+                showToast(`Connected to ${connection.metadata.name || 'peer'}`);
+                
+                // Start connection timer
+                connectionStartTime = Date.now();
+                connectionStats.style.display = 'flex';
+                updateConnectionTimer();
+                connectionTimer = setInterval(updateConnectionTimer, 1000);
+                
+                // Send peer info
+                connection.send({
+                    type: 'peer-info',
+                    name: peerName
+                });
+            });
+            
+            connection.on('data', (data) => {
+                handleIncomingData(data);
+            });
+            
+            connection.on('close', () => {
+                updateConnectionStatus(false, 'Disconnected', connectionStatus, connectionText);
+                updateConnectionStatus(false, 'Disconnected', receiveConnectionStatus, receiveConnectionText);
+                showToast('Connection closed');
+                clearInterval(connectionTimer);
+                connectionStats.style.display = 'none';
+            });
+            
+            connection.on('error', (err) => {
+                console.error('Connection error:', err);
+                showToast(`Connection error: ${err.message}`);
+            });
+        }
+        
+        // Update connection timer
+        function updateConnectionTimer() {
+            const seconds = Math.floor((Date.now() - connectionStartTime) / 1000);
+            connectionTime.textContent = `${seconds}s`;
+            
+            // Update connection type
+            if (conn && conn.connection) {
+                const iceConnectionState = conn.connection.iceConnectionState;
+                if (iceConnectionState === 'connected') {
+                    const usingRelay = conn.connection.getConfiguration().iceTransportPolicy === 'relay';
+                    connectionType.textContent = usingRelay ? 'Relay' : 'Direct';
+                }
+            }
+        }
         
         // Connect to another peer
         connectBtn.addEventListener('click', () => {
@@ -542,40 +797,27 @@
             }
             
             conn = peer.connect(remoteId, {
-                reliable: true
+                reliable: true,
+                serialization: 'json',
+                metadata: {
+                    name: peerName
+                }
             });
             
-            conn.on('open', () => {
-                updateConnectionStatus(true, 'Connected to peer', connectionStatus, connectionText);
-                showToast('Connected to peer');
-            });
-            
-            conn.on('data', (data) => {
-                handleIncomingData(data);
-            });
-            
-            conn.on('close', () => {
-                updateConnectionStatus(false, 'Disconnected', connectionStatus, connectionText);
-                showToast('Connection closed');
-            });
-            
-            conn.on('error', (err) => {
-                console.error('Connection error:', err);
-                showToast('Connection error: ' + err.message);
-            });
+            setupConnectionHandlers(conn);
         });
         
         // Copy peer ID buttons
         copyPeerIdBtn.addEventListener('click', () => {
             peerIdInput.select();
             document.execCommand('copy');
-            showToast('Peer ID copied to clipboard');
+            showToast('Peer ID copied');
         });
         
         copyReceivePeerIdBtn.addEventListener('click', () => {
             receivePeerIdInput.select();
             document.execCommand('copy');
-            showToast('Peer ID copied to clipboard');
+            showToast('Peer ID copied');
         });
         
         // File handling
@@ -625,47 +867,64 @@
             updatePreview();
             
             if (filesToSend.length > 0) {
-                sendFilesBtn.style.display = 'inline-block';
+                sendFilesBtn.style.display = 'block';
             } else {
                 sendFilesBtn.style.display = 'none';
             }
         }
         
         function updatePreview() {
-            previewContainer.innerHTML = '';
+            filePreview.innerHTML = '';
             
             filesToSend.forEach((file, index) => {
-                const previewItem = document.createElement('div');
-                previewItem.className = 'preview-item';
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
                 
                 if (file.type.startsWith('image/')) {
                     const reader = new FileReader();
                     reader.onload = (e) => {
                         const img = document.createElement('img');
                         img.src = e.target.result;
-                        previewItem.appendChild(img);
+                        fileItem.appendChild(img);
+                        
+                        const fileName = document.createElement('div');
+                        fileName.className = 'file-name';
+                        fileName.textContent = file.name;
+                        fileItem.appendChild(fileName);
                         
                         const removeBtn = document.createElement('button');
                         removeBtn.className = 'remove-btn';
                         removeBtn.innerHTML = '×';
-                        removeBtn.addEventListener('click', () => removeFile(index));
-                        previewItem.appendChild(removeBtn);
+                        removeBtn.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            removeFile(index);
+                        });
+                        fileItem.appendChild(removeBtn);
                         
-                        previewContainer.appendChild(previewItem);
+                        filePreview.appendChild(fileItem);
                     };
                     reader.readAsDataURL(file);
                 } else {
-                    const fileInfo = document.createElement('div');
-                    fileInfo.textContent = file.name;
-                    previewItem.appendChild(fileInfo);
+                    const fileIcon = document.createElement('div');
+                    fileIcon.textContent = '📄';
+                    fileIcon.style.fontSize = '2rem';
+                    fileItem.appendChild(fileIcon);
+                    
+                    const fileName = document.createElement('div');
+                    fileName.className = 'file-name';
+                    fileName.textContent = file.name;
+                    fileItem.appendChild(fileName);
                     
                     const removeBtn = document.createElement('button');
                     removeBtn.className = 'remove-btn';
-                    removeBtn.innerHTML = '×';
-                    removeBtn.addEventListener('click', () => removeFile(index));
-                    previewItem.appendChild(removeBtn);
-                    
-                    previewContainer.appendChild(previewItem);
+                        removeBtn.innerHTML = '×';
+                        removeBtn.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            removeFile(index);
+                        });
+                        fileItem.appendChild(removeBtn);
+                        
+                        filePreview.appendChild(fileItem);
                 }
             });
         }
@@ -695,16 +954,32 @@
             progressBar.style.width = '0%';
             progressText.textContent = 'Preparing files...';
             
+            // Create transfer ID
+            const transferId = Date.now().toString(36) + Math.random().toString(36).substr(2, 4);
+            
             // Send metadata first
             const metadata = {
                 type: 'files',
+                transferId: transferId,
                 count: filesToSend.length,
                 files: filesToSend.map(file => ({
                     name: file.name,
                     type: file.type,
-                    size: file.size
-                }))
+                    size: file.size,
+                    lastModified: file.lastModified
+                })),
+                sender: peerName
             };
+            
+            // Add to received items (for sender)
+            addTransferItem({
+                type: 'files',
+                transferId: transferId,
+                files: metadata.files,
+                status: 'Sending...',
+                sender: 'You',
+                timestamp: new Date()
+            });
             
             conn.send(metadata);
             
@@ -727,6 +1002,7 @@
                         
                         conn.send({
                             type: 'file-chunk',
+                            transferId: transferId,
                             fileIndex: index,
                             chunkIndex: i,
                             totalChunks: totalChunks,
@@ -736,13 +1012,20 @@
                         transferredSize += chunk.length;
                         const progress = Math.round((transferredSize / totalSize) * 100);
                         progressBar.style.width = `${progress}%`;
-                        progressText.textContent = `Transferring ${file.name} (${progress}%)`;
+                        progressText.textContent = `Sending ${file.name} (${progress}%)`;
+                        
+                        // Update transfer status
+                        updateTransferStatus(transferId, `Sending ${file.name} (${progress}%)`);
                     }
                     
                     transferred++;
                     if (transferred === filesToSend.length) {
                         progressText.textContent = 'Transfer complete!';
                         showToast('Files sent successfully');
+                        
+                        // Update transfer status
+                        updateTransferStatus(transferId, 'Completed');
+                        
                         filesToSend = [];
                         updatePreview();
                         sendFilesBtn.style.display = 'none';
@@ -778,9 +1061,23 @@
                 return;
             }
             
+            const transferId = Date.now().toString(36) + Math.random().toString(36).substr(2, 4);
+            
             conn.send({
                 type: 'url',
-                url: url
+                url: url,
+                transferId: transferId,
+                sender: peerName
+            });
+            
+            // Add to sender's received items
+            addTransferItem({
+                type: 'url',
+                transferId: transferId,
+                url: url,
+                status: 'Sent',
+                sender: 'You',
+                timestamp: new Date()
             });
             
             showToast('URL sent');
@@ -789,21 +1086,40 @@
         
         // Handle incoming data
         function handleIncomingData(data) {
-            if (data.type === 'url') {
-                addReceivedItem({
+            if (data.type === 'peer-info') {
+                // Update peer name in UI if needed
+                return;
+            } else if (data.type === 'url') {
+                addTransferItem({
                     type: 'url',
+                    transferId: data.transferId,
                     url: data.url,
+                    status: 'Received',
+                    sender: data.sender || 'Unknown',
                     timestamp: new Date()
                 });
-                showToast('Received URL');
+                showToast(`Received URL from ${data.sender || 'peer'}`);
             } else if (data.type === 'files') {
                 // Prepare for receiving files
                 currentTransfer = {
+                    transferId: data.transferId,
                     files: data.files,
+                    sender: data.sender || 'Unknown',
                     receivedChunks: Array(data.count).fill().map(() => []),
-                    receivedCount: 0
+                    receivedCount: 0,
+                    startTime: Date.now()
                 };
-                showToast(`Incoming ${data.count} files`);
+                
+                addTransferItem({
+                    type: 'files',
+                    transferId: data.transferId,
+                    files: data.files,
+                    status: 'Receiving...',
+                    sender: data.sender || 'Unknown',
+                    timestamp: new Date()
+                });
+                
+                showToast(`Receiving ${data.count} files from ${data.sender || 'peer'}`);
             } else if (data.type === 'file-chunk') {
                 receiveFileChunk(data);
             }
@@ -812,82 +1128,152 @@
         let currentTransfer = null;
         
         function receiveFileChunk(chunkData) {
-            if (!currentTransfer) return;
+            if (!currentTransfer || currentTransfer.transferId !== chunkData.transferId) return;
             
-            const { fileIndex, chunkIndex, totalChunks, data } = chunkData;
-            currentTransfer.receivedChunks[fileIndex][chunkIndex] = data;
+            const { fileIndex, chunkIndex, totalChunks } = chunkData;
+            currentTransfer.receivedChunks[fileIndex][chunkIndex] = chunkData.data;
+            
+            // Calculate progress
+            const receivedChunks = currentTransfer.receivedChunks[fileIndex].filter(Boolean).length;
+            const progress = Math.round((receivedChunks / totalChunks) * 100);
+            const file = currentTransfer.files[fileIndex];
+            
+            updateTransferStatus(currentTransfer.transferId, `Receiving ${file.name} (${progress}%)`);
             
             // Check if all chunks for this file are received
-            const receivedChunks = currentTransfer.receivedChunks[fileIndex].filter(Boolean).length;
             if (receivedChunks === totalChunks) {
                 // Reconstruct file
                 const fileInfo = currentTransfer.files[fileIndex];
                 const chunks = currentTransfer.receivedChunks[fileIndex];
                 const blob = new Blob(chunks, { type: fileInfo.type });
                 
-                addReceivedItem({
-                    type: 'file',
-                    name: fileInfo.name,
-                    type: fileInfo.type,
-                    size: fileInfo.size,
-                    blob: blob,
-                    timestamp: new Date()
-                });
+                // Update transfer with received file
+                updateTransferWithFile(currentTransfer.transferId, fileIndex, blob);
                 
                 currentTransfer.receivedCount++;
                 
                 // Check if all files are received
                 if (currentTransfer.receivedCount === currentTransfer.files.length) {
+                    const transferTime = (Date.now() - currentTransfer.startTime) / 1000;
+                    updateTransferStatus(currentTransfer.transferId, `Completed (${transferTime.toFixed(1)}s)`);
                     showToast('All files received');
                     currentTransfer = null;
                 }
             }
         }
         
-        function addReceivedItem(item) {
+        function addTransferItem(item) {
             noItemsMessage.style.display = 'none';
             
-            const receivedItem = document.createElement('div');
-            receivedItem.className = 'received-item';
+            const transferItem = document.createElement('div');
+            transferItem.className = 'transfer-item';
+            transferItem.id = `transfer-${item.transferId}`;
             
             if (item.type === 'url') {
-                receivedItem.innerHTML = `
-                    <div class="received-item-icon">🔗</div>
-                    <div class="received-item-info">
-                        <h4>URL Received</h4>
-                        <p>${item.url}</p>
-                        <small>${formatDate(item.timestamp)}</small>
+                transferItem.innerHTML = `
+                    <div class="transfer-icon">🔗</div>
+                    <div class="transfer-info">
+                        <div class="transfer-name">URL Shared</div>
+                        <div class="transfer-status">From ${item.sender} • ${formatDate(item.timestamp)}</div>
+                        <div class="transfer-url" style="margin-top: 0.25rem; font-size: 0.875rem; color: var(--gray-700);">${item.url}</div>
                     </div>
-                    <div class="received-item-actions">
-                        <a href="${item.url}" target="_blank">Open</a>
+                    <div class="transfer-actions">
+                        <a href="${item.url}" target="_blank" class="btn btn-sm btn-outline">Open</a>
                     </div>
                 `;
-            } else if (item.type === 'file') {
-                let preview = '';
-                if (item.blob.type.startsWith('image/')) {
-                    preview = `<img src="${URL.createObjectURL(item.blob)}" alt="${item.name}">`;
-                } else {
-                    preview = `<div class="received-item-icon">📄</div>`;
-                }
+            } else if (item.type === 'files') {
+                const fileCount = item.files.length;
+                const totalSize = item.files.reduce((sum, file) => sum + file.size, 0);
                 
-                receivedItem.innerHTML = `
-                    ${preview}
-                    <div class="received-item-info">
-                        <h4>${item.name}</h4>
-                        <p>${formatFileSize(item.size)}</p>
-                        <small>${formatDate(item.timestamp)}</small>
+                transferItem.innerHTML = `
+                    <div class="transfer-icon">📦</div>
+                    <div class="transfer-info">
+                        <div class="transfer-name">${fileCount} file${fileCount > 1 ? 's' : ''} (${formatFileSize(totalSize)})</div>
+                        <div class="transfer-status">From ${item.sender} • ${formatDate(item.timestamp)}</div>
+                        <div class="transfer-progress" style="margin-top: 0.25rem; font-size: 0.875rem; color: var(--gray-700);">${item.status}</div>
                     </div>
-                    <div class="received-item-actions">
-                        <a href="${URL.createObjectURL(item.blob)}" download="${item.name}">Download</a>
+                    <div class="transfer-actions" id="actions-${item.transferId}">
+                        ${item.status.includes('Completed') || item.status.includes('Received') ? `
+                            <button class="btn btn-sm" onclick="downloadFiles('${item.transferId}')">Download</button>
+                        ` : ''}
                     </div>
                 `;
+                
+                // Store files data for download
+                if (item.filesData) {
+                    transferItem.dataset.filesData = JSON.stringify(item.filesData);
+                }
             }
             
-            receivedItemsContainer.insertBefore(receivedItem, receivedItemsContainer.firstChild);
+            // Add to top of the list
+            receivedItemsContainer.insertBefore(transferItem, receivedItemsContainer.firstChild);
         }
         
+        function updateTransferStatus(transferId, status) {
+            const transferItem = document.getElementById(`transfer-${transferId}`);
+            if (transferItem) {
+                const progressElement = transferItem.querySelector('.transfer-progress');
+                if (progressElement) {
+                    progressElement.textContent = status;
+                }
+                
+                // Update actions if transfer is complete
+                if (status.includes('Completed') || status.includes('Received')) {
+                    const actionsElement = transferItem.querySelector('.transfer-actions');
+                    if (actionsElement && !actionsElement.querySelector('.btn')) {
+                        actionsElement.innerHTML = `<button class="btn btn-sm" onclick="downloadFiles('${transferId}')">Download</button>`;
+                    }
+                }
+            }
+        }
+        
+        function updateTransferWithFile(transferId, fileIndex, blob) {
+            const transferItem = document.getElementById(`transfer-${transferId}`);
+            if (transferItem) {
+                let filesData = [];
+                try {
+                    filesData = JSON.parse(transferItem.dataset.filesData || '[]');
+                } catch (e) {
+                    filesData = [];
+                }
+                
+                // Get file info from currentTransfer
+                const fileInfo = currentTransfer.files[fileIndex];
+                filesData[fileIndex] = {
+                    name: fileInfo.name,
+                    type: fileInfo.type,
+                    blob: URL.createObjectURL(blob)
+                };
+                
+                transferItem.dataset.filesData = JSON.stringify(filesData);
+            }
+        }
+        
+        // Global function for downloading files
+        window.downloadFiles = function(transferId) {
+            const transferItem = document.getElementById(`transfer-${transferId}`);
+            if (transferItem) {
+                const filesData = JSON.parse(transferItem.dataset.filesData || '[]');
+                
+                filesData.forEach(file => {
+                    if (file.blob) {
+                        const a = document.createElement('a');
+                        a.href = file.blob;
+                        a.download = file.name;
+                        a.style.display = 'none';
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                        
+                        // Revoke the blob URL after download
+                        setTimeout(() => URL.revokeObjectURL(file.blob), 100);
+                    }
+                });
+            }
+        };
+        
         function formatDate(date) {
-            return date.toLocaleString();
+            return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
         }
         
         function formatFileSize(bytes) {
@@ -897,7 +1283,7 @@
         }
         
         function updateConnectionStatus(connected, text, indicatorElement, textElement) {
-            indicatorElement.classList.toggle('connected', connected);
+            indicatorElement.className = 'status-dot ' + (connected ? 'connected' : 'disconnected');
             textElement.textContent = text;
         }
         
@@ -909,6 +1295,10 @@
                 toast.classList.remove('show');
             }, 3000);
         }
+        
+        // Initialize
+        loadSettings();
+        initializePeer();
     </script>
 </body>
 </html>
