@@ -3,1572 +3,899 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yugal Shares - Ultra Fast File Transfer</title>
+    <title>PW Power Batches - Premium JEE/NEET Coaching | Physics Wallah</title>
+    <meta name="description" content="Join PW Power Batches for top-quality JEE, NEET, and School preparation coaching with live interactive classes, doubt resolution, and personalized learning.">
+    <meta name="keywords" content="PW Power Batches, JEE preparation, NEET coaching, Physics Wallah, online coaching, IIT JEE, medical entrance">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         :root {
-            --black: #000000;
-            --white: #ffffff;
-            --gray-100: #f5f5f5;
-            --gray-200: #eeeeee;
-            --gray-300: #e0e0e0;
-            --gray-700: #616161;
-            --primary: #000000;
-            --secondary: #333333;
-            --green: #4CAF50;
-            --red: #F44336;
-            --yellow: #FFC107;
-            --blue: #2196F3;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            --cream-white: #f8f5f0;
+            --dark-text: #222;
+            --pw-orange: #f97316;
+            --pw-dark: #1e293b;
+            --pw-light: #64748b;
         }
         
         body {
-            background-color: var(--white);
-            color: var(--black);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--cream-white);
+            color: var(--dark-text);
             line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
         }
         
-        .container {
-            max-width: 100%;
-            width: 100%;
-            padding: 1rem;
-            margin: 0 auto;
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 0.5rem 0;
         }
         
-        @media (min-width: 768px) {
-            .container {
-                max-width: 800px;
-                padding: 2rem;
-            }
+        .navbar-brand {
+            display: flex;
+            align-items: center;
         }
         
-        header {
-            text-align: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--gray-200);
+        .navbar-brand img {
+            height: 40px;
+            margin-right: 10px;
         }
         
-        h1 {
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-            font-size: 2rem;
+        .brand-title {
             font-weight: 700;
-        }
-        
-        .subtitle {
-            color: var(--gray-700);
-            margin-bottom: 1.5rem;
-            font-size: 1rem;
-        }
-        
-        .card {
-            background-color: var(--white);
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            border: 1px solid var(--gray-200);
-        }
-        
-        .card-title {
+            color: var(--pw-dark);
             font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--primary);
         }
         
-        .btn {
-            background-color: var(--primary);
-            color: var(--white);
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 1rem;
+        .nav-link {
+            color: var(--pw-dark);
             font-weight: 500;
-            transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
-        
-        .btn:hover {
-            opacity: 0.9;
-            transform: translateY(-1px);
-        }
-        
-        .btn:active {
-            transform: translateY(0);
-        }
-        
-        .btn-outline {
-            background-color: transparent;
-            border: 1px solid var(--primary);
-            color: var(--primary);
-        }
-        
-        .btn-sm {
             padding: 0.5rem 1rem;
-            font-size: 0.875rem;
         }
         
-        .btn-icon {
+        .nav-link:hover {
+            color: var(--pw-orange);
+        }
+        
+        .navbar-toggler {
+            border: none;
             padding: 0.5rem;
-            min-width: 40px;
         }
         
-        .input-group {
-            margin-bottom: 1rem;
+        .navbar-toggler:focus {
+            box-shadow: none;
         }
         
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: var(--secondary);
+        .hero-section {
+            background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), 
+                        url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            padding: 5rem 0;
         }
         
-        input[type="text"],
-        input[type="file"],
-        textarea,
-        select {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid var(--gray-300);
-            border-radius: 6px;
-            font-size: 1rem;
-            transition: border 0.2s ease;
-        }
-        
-        input[type="text"]:focus,
-        textarea:focus,
-        select:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-        
-        .status-indicator {
-            display: inline-flex;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-        
-        .status-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            margin-right: 0.5rem;
-            background-color: #ccc;
-        }
-        
-        .status-dot.connected {
-            background-color: var(--green);
-        }
-        
-        .status-dot.disconnected {
-            background-color: var(--red);
-        }
-        
-        .status-dot.pending {
-            background-color: var(--yellow);
-        }
-        
-        .drop-area {
-            border: 2px dashed var(--gray-300);
-            border-radius: 8px;
-            padding: 2rem;
-            text-align: center;
-            margin-bottom: 1.5rem;
-            transition: all 0.2s ease;
-            background-color: var(--gray-100);
-            cursor: pointer;
-        }
-        
-        .drop-area.highlight {
-            border-color: var(--primary);
-            background-color: rgba(0, 0, 0, 0.02);
-        }
-        
-        .file-preview {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
+        .hero-title {
+            font-weight: 700;
+            color: var(--pw-dark);
             margin-bottom: 1.5rem;
         }
         
-        .file-item {
-            position: relative;
-            border-radius: 6px;
-            overflow: hidden;
-            width: 100px;
-            height: 100px;
-            background-color: var(--gray-100);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .hero-subtitle {
+            color: var(--pw-light);
+            margin-bottom: 2rem;
         }
         
-        .file-item img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-        }
-        
-        .file-item .file-name {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background-color: rgba(0, 0, 0, 0.7);
+        .btn-pw {
+            background-color: var(--pw-orange);
             color: white;
-            padding: 0.25rem;
-            font-size: 0.75rem;
-            text-align: center;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        
-        .file-item .remove-btn {
-            position: absolute;
-            top: 4px;
-            right: 4px;
-            background-color: rgba(255, 255, 255, 0.9);
-            color: var(--black);
-            border: none;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: bold;
-        }
-        
-        .progress-container {
-            margin-top: 1rem;
-            display: none;
-        }
-        
-        .progress-bar {
-            height: 6px;
-            background-color: var(--gray-200);
-            border-radius: 3px;
-            overflow: hidden;
-            margin-bottom: 0.5rem;
-        }
-        
-        .progress {
-            height: 100%;
-            background-color: var(--primary);
-            width: 0%;
-            transition: width 0.3s ease;
-        }
-        
-        .transfer-list {
-            margin-top: 1.5rem;
-        }
-        
-        .transfer-item {
-            display: flex;
-            align-items: center;
-            padding: 0.75rem;
-            border-bottom: 1px solid var(--gray-200);
-        }
-        
-        .transfer-item:last-child {
-            border-bottom: none;
-        }
-        
-        .transfer-icon {
-            margin-right: 1rem;
-            font-size: 1.5rem;
-        }
-        
-        .transfer-info {
-            flex: 1;
-        }
-        
-        .transfer-name {
-            font-weight: 500;
-            margin-bottom: 0.25rem;
-        }
-        
-        .transfer-status {
-            font-size: 0.875rem;
-            color: var(--gray-700);
-        }
-        
-        .transfer-actions {
-            margin-left: 1rem;
-            display: flex;
-            gap: 0.5rem;
-        }
-        
-        .settings-form {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-        
-        .toast {
-            position: fixed;
-            bottom: 1rem;
-            left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background-color: var(--black);
-            color: var(--white);
-            padding: 0.75rem 1.5rem;
-            border-radius: 6px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            opacity: 0;
-            transition: all 0.3s ease;
-            z-index: 1000;
-            max-width: 90%;
-            text-align: center;
-        }
-        
-        .toast.show {
-            transform: translateX(-50%) translateY(0);
-            opacity: 1;
-        }
-        
-        .tabs {
-            display: flex;
-            border-bottom: 1px solid var(--gray-200);
-            margin-bottom: 1.5rem;
-        }
-        
-        .tab {
-            padding: 0.75rem 1.5rem;
-            cursor: pointer;
-            background: none;
-            border: none;
-            font-size: 1rem;
-            font-weight: 500;
-            color: var(--gray-700);
-            position: relative;
-            transition: all 0.2s ease;
-        }
-        
-        .tab.active {
-            color: var(--primary);
             font-weight: 600;
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            border: none;
+            transition: all 0.3s;
         }
         
-        .tab.active::after {
+        .btn-pw:hover {
+            background-color: #ea580c;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .section-title {
+            font-weight: 700;
+            color: var(--pw-dark);
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
             content: '';
             position: absolute;
-            bottom: -1px;
+            bottom: -10px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--pw-orange);
+        }
+        
+        .feature-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            height: 100%;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--pw-orange);
+            margin-bottom: 1.5rem;
+        }
+        
+        .coupon-section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 3rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .coupon-form {
+            background-color: var(--cream-white);
+            padding: 2rem;
+            border-radius: 10px;
+        }
+        
+        .form-control {
+            padding: 0.75rem 1rem;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        
+        .form-control:focus {
+            border-color: var(--pw-orange);
+            box-shadow: 0 0 0 0.25rem rgba(249, 115, 22, 0.25);
+        }
+        
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            background-color: #000;
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
             left: 0;
             width: 100%;
-            height: 2px;
-            background-color: var(--primary);
+            height: 100%;
+            border: none;
         }
         
-        .tab-content {
-            display: none;
+        .polaroid-effect {
+            background: white;
+            padding: 15px 15px 40px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            transform: rotate(2deg);
+            transition: all 0.3s;
         }
         
-        .tab-content.active {
-            display: block;
-            animation: fadeIn 0.3s ease;
+        .polaroid-effect:hover {
+            transform: rotate(0deg) scale(1.03);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        .polaroid-effect img {
+            width: 100%;
+            height: auto;
+            border: 1px solid #eee;
         }
         
-        .empty-state {
+        .polaroid-caption {
             text-align: center;
+            margin-top: 15px;
+            font-style: italic;
+            color: var(--pw-light);
+        }
+        
+        .batch-table {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .batch-table th {
+            background-color: var(--pw-dark);
+            color: white;
+        }
+        
+        .batch-table tr:nth-child(even) {
+            background-color: rgba(0,0,0,0.02);
+        }
+        
+        .faq-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .faq-question {
+            font-weight: 600;
+            color: var(--pw-dark);
+            cursor: pointer;
+        }
+        
+        .faq-answer {
+            padding-top: 1rem;
+            color: var(--pw-light);
+        }
+        
+        .footer {
+            background-color: var(--pw-dark);
+            color: white;
+            padding: 3rem 0;
+        }
+        
+        .footer-links h5 {
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            display: block;
+            margin-bottom: 0.5rem;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--pw-orange);
+            padding-left: 5px;
+        }
+        
+        .social-icons a {
+            color: white;
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .social-icons a:hover {
+            color: var(--pw-orange);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 1.5rem;
+            margin-top: 2rem;
+            color: #aaa;
+        }
+        
+        /* Loading animation */
+        .loader {
+            display: none;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--pw-orange);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Modal styles */
+        .modal-content {
+            border-radius: 10px;
+            border: none;
+        }
+        
+        .modal-header {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        
+        .modal-body {
             padding: 2rem;
-            color: var(--gray-700);
         }
         
-        .connection-stats {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-            font-size: 0.875rem;
-            color: var(--gray-700);
+        .success-icon {
+            font-size: 4rem;
+            color: var(--pw-orange);
+            margin-bottom: 1.5rem;
         }
         
-        .stat-item {
-            display: flex;
-            align-items: center;
-        }
-        
-        .stat-item span {
-            margin-left: 0.25rem;
-        }
-        
-        .save-location {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-top: 0.5rem;
-        }
-        
-        .save-location select {
-            flex: 1;
-        }
-        
-        @media (max-width: 480px) {
-            .container {
-                padding: 1rem;
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 3rem 0;
+                text-align: center;
             }
             
-            .card {
-                padding: 1rem;
+            .coupon-section {
+                padding: 2rem 1rem;
             }
             
-            .drop-area {
+            .coupon-form {
                 padding: 1.5rem;
             }
             
-            .tab {
-                padding: 0.75rem 1rem;
-                font-size: 0.875rem;
+            .navbar-brand img {
+                height: 30px;
             }
             
-            .transfer-actions {
-                flex-direction: column;
+            .brand-title {
+                font-size: 1rem;
+            }
+            
+            .batch-table {
+                font-size: 0.85rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 1.75rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Yugal Shares</h1>
-            <p class="subtitle">Ultra Fast Peer-to-Peer File Transfer</p>
-        </header>
-        
-        <div class="tabs">
-            <button class="tab active" data-tab="share">Share</button>
-            <button class="tab" data-tab="receive">Receive</button>
-            <button class="tab" data-tab="settings">Settings</button>
-        </div>
-        
-        <div class="tab-content active" id="share">
-            <div class="card">
-                <h2 class="card-title">Connection</h2>
-                <div class="status-indicator">
-                    <div class="status-dot" id="connection-status"></div>
-                    <span id="connection-text">Disconnected</span>
-                </div>
-                
-                <div class="input-group">
-                    <label for="peer-name">Your Display Name</label>
-                    <input type="text" id="peer-name" placeholder="Enter your name">
-                </div>
-                
-                <div class="input-group">
-                    <label for="peer-id">Your Connection ID</label>
-                    <div style="display: flex;">
-                        <input type="text" id="peer-id" readonly placeholder="Generating...">
-                        <button class="btn btn-sm" id="copy-peer-id" style="margin-left: 0.5rem;">Copy</button>
-                    </div>
-                </div>
-                
-                <div class="input-group">
-                    <label for="remote-peer-id">Connect to Peer</label>
-                    <div style="display: flex;">
-                        <input type="text" id="remote-peer-id" placeholder="Enter peer's connection ID">
-                        <button class="btn btn-sm" id="connect-btn" style="margin-left: 0.5rem;">Connect</button>
-                    </div>
-                </div>
-                
-                <div class="connection-stats" id="connection-stats" style="display: none;">
-                    <div class="stat-item">
-                        <span>📶</span>
-                        <span id="connection-type">-</span>
-                    </div>
-                    <div class="stat-item">
-                        <span>⏱️</span>
-                        <span id="connection-time">0s</span>
-                    </div>
-                    <div class="stat-item">
-                        <span>🚀</span>
-                        <span id="connection-speed">0 MB/s</span>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="card">
-                <h2 class="card-title">Share Files</h2>
-                <div class="drop-area" id="drop-area">
-                    <p>Drag & drop files here or click to browse</p>
-                    <button class="btn btn-outline" id="browse-btn">Select Files</button>
-                    <input type="file" id="file-input" multiple style="display: none;">
-                </div>
-                
-                <div class="file-preview" id="file-preview"></div>
-                
-                <div class="progress-container" id="progress-container">
-                    <div class="progress-bar">
-                        <div class="progress" id="progress-bar"></div>
-                    </div>
-                    <div id="progress-text">Preparing transfer...</div>
-                </div>
-                
-                <button class="btn" id="send-files-btn" style="display: none; width: 100%;">Send Files</button>
-            </div>
-            
-            <div class="card">
-                <h2 class="card-title">Share URL</h2>
-                <div class="input-group">
-                    <input type="text" id="url-input" placeholder="Enter URL to share">
-                </div>
-                <button class="btn" id="send-url-btn" style="width: 100%;">Send URL</button>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="https://pnghdpro.com/wp-content/themes/pnghdpro/download/social-media-and-brands/physics-wallah-logo.png" alt="Physics Wallah Logo">
+                <span class="brand-title d-none d-sm-inline">Physics Wallah</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#batches">Batches</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#discount">Get Discount</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#faq">FAQ</a>
+                    </li>
+                    <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
+                        <a class="btn btn-pw" href="#discount">Book Now</a>
+                    </li>
+                </ul>
             </div>
         </div>
-        
-        <div class="tab-content" id="receive">
-            <div class="card">
-                <h2 class="card-title">Connection</h2>
-                <div class="status-indicator">
-                    <div class="status-dot" id="receive-connection-status"></div>
-                    <span id="receive-connection-text">Disconnected</span>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="hero-title">PW Power Batches: Your Path to Success</h1>
+                    <p class="hero-subtitle">Experience premium coaching with live interactive classes, personalized attention, and comprehensive study materials for JEE, NEET, and School preparation.</p>
+                    <a href="#discount" class="btn btn-pw me-2">Get ₹4500 Discount</a>
+                    <a href="#features" class="btn btn-outline-secondary">Learn More</a>
                 </div>
-                
-                <div class="input-group">
-                    <label for="receive-peer-id">Your Connection ID</label>
-                    <div style="display: flex;">
-                        <input type="text" id="receive-peer-id" readonly placeholder="Generating...">
-                        <button class="btn btn-sm" id="copy-receive-peer-id" style="margin-left: 0.5rem;">Copy</button>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="card">
-                <h2 class="card-title">Received Items</h2>
-                <div class="transfer-list" id="received-items">
-                    <div class="empty-state" id="no-items-message">
-                        <p>No items received yet</p>
-                        <p>Share your ID to receive files</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="tab-content" id="settings">
-            <div class="card">
-                <h2 class="card-title">Settings</h2>
-                <div class="settings-form">
-                    <div class="input-group">
-                        <label for="settings-peer-name">Display Name</label>
-                        <input type="text" id="settings-peer-name" placeholder="Enter your name">
-                    </div>
-                    
-                    <div class="input-group">
-                        <label for="settings-peer-id">Connection ID</label>
-                        <input type="text" id="settings-peer-id" readonly>
-                    </div>
-                    
-                    <div class="input-group">
-                        <label>Default Save Location</label>
-                        <select id="save-location">
-                            <option value="downloads">Downloads Folder</option>
-                            <option value="pictures">Pictures</option>
-                            <option value="documents">Documents</option>
-                            <option value="ask">Ask Each Time</option>
-                        </select>
-                    </div>
-                    
-                    <div class="input-group">
-                        <label>Connection Type</label>
-                        <div>
-                            <input type="radio" id="conn-type-auto" name="conn-type" checked>
-                            <label for="conn-type-auto" style="display: inline;">Auto (Recommended)</label>
+                <div class="col-lg-6 d-none d-lg-block">
+                    <div class="polaroid-effect">
+                        <div class="video-container">
+                            <iframe src="https://drive.google.com/file/d/1KLRHvwW4p5qBJtMqcY6Y-nZNM2bzgONk/preview" allowfullscreen></iframe>
                         </div>
-                        <div>
-                            <input type="radio" id="conn-type-relay" name="conn-type">
-                            <label for="conn-type-relay" style="display: inline;">Force Relay (Slower but more reliable)</label>
+                        <p class="polaroid-caption">Experience PW Power Batches</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-5">
+        <div class="container">
+            <h2 class="section-title text-center mb-5">Why Choose PW Power Batches?</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                        </div>
+                        <h3>Live Interactive Sessions</h3>
+                        <p>Real-time interaction with PW's best faculty in small cohort batches of ~100 students for personalized attention.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-question-circle"></i>
+                        </div>
+                        <h3>Instant Doubt Resolution</h3>
+                        <p>Get your questions answered immediately by your class teacher during sessions and through dedicated doubt support.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <h3>Personalized Learning</h3>
+                        <p>Targeted support tailored to your specific needs with dedicated mentors and performance tracking.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <h3>Comprehensive Study Material</h3>
+                        <p>PDF notes for each class, recorded lectures, DPPs, tests, and access to an infinite practice platform.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <h3>Test Series & Analysis</h3>
+                        <p>Regular minor tests every 2 weeks, All India Test Series every 2 months, and detailed performance analysis.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-rupee-sign"></i>
+                        </div>
+                        <h3>Flexible Payment Options</h3>
+                        <p>Pay full fee or in easy installments with smart financing options available for all batches.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Batches Section -->
+    <section id="batches" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title text-center mb-5">Our Power Batch Offerings</h2>
+            
+            <div class="row mb-5">
+                <div class="col-12">
+                    <div class="batch-table table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Batch Name</th>
+                                    <th>Class</th>
+                                    <th>List Price</th>
+                                    <th>Discount</th>
+                                    <th>Effective Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>12th JEE Target 2.0 2026</td>
+                                    <td>1 year JEE</td>
+                                    <td>₹58,000</td>
+                                    <td>₹8,000</td>
+                                    <td>₹50,000</td>
+                                </tr>
+                                <tr>
+                                    <td>12th NEET Target 2.0 2026</td>
+                                    <td>1 year NEET</td>
+                                    <td>₹58,000</td>
+                                    <td>₹8,000</td>
+                                    <td>₹50,000</td>
+                                </tr>
+                                <tr>
+                                    <td>Dropper JEE Target 2.0 2026</td>
+                                    <td>1 year dropper JEE</td>
+                                    <td>₹60,000</td>
+                                    <td>₹8,000</td>
+                                    <td>₹52,000</td>
+                                </tr>
+                                <tr>
+                                    <td>2 year JEE Target 2.0 2027</td>
+                                    <td>11th JEE</td>
+                                    <td>₹100,000</td>
+                                    <td>₹15,000</td>
+                                    <td>₹85,000</td>
+                                </tr>
+                                <tr>
+                                    <td>Class 9th [School+JEE+NEET] 2.0 2026</td>
+                                    <td>9th</td>
+                                    <td>₹48,000</td>
+                                    <td>₹8,000</td>
+                                    <td>₹40,000</td>
+                                </tr>
+                                <tr>
+                                    <td>Class 8th [School+JEE+NEET] 2028 (3 Year)</td>
+                                    <td>8-10 3 year program</td>
+                                    <td>₹90,000</td>
+                                    <td>₹12,000</td>
+                                    <td>₹78,000</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <a href="#discount" class="btn btn-pw">Get Special Discount</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <h2 class="section-title text-center mb-5">Experience Power Batches</h2>
+                    <div class="video-container">
+                        <iframe src="https://drive.google.com/file/d/1KLRHvwW4p5qBJtMqcY6Y-nZNM2bzgONk/preview" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Coupon Section -->
+    <section id="discount" class="py-5 bg-light">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="coupon-section">
+                        <h2 class="section-title text-center mb-4">Get ₹4500 Instant Discount</h2>
+                        <p class="text-center mb-5">Fill the form below to receive exclusive discount instructions via email on how to apply it when booking your seat.</p>
+                        
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="coupon-form">
+                                    <form id="couponForm">
+                                        <div class="mb-3">
+                                            <label for="name" class="form-label">Full Name</label>
+                                            <input type="text" class="form-control" id="name" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="email" class="form-label">Email Address</label>
+                                            <input type="email" class="form-control" id="email" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="phone" class="form-label">Mobile Number</label>
+                                            <input type="tel" class="form-control" id="phone" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="batchType" class="form-label">Select Batch Type</label>
+                                            <select class="form-select" id="batchType" required>
+                                                <option value="" selected disabled>Choose batch type</option>
+                                                <option value="12th JEE Target 2.0 2026">12th JEE Target 2.0 2026</option>
+                                                <option value="12th NEET Target 2.0 2026">12th NEET Target 2.0 2026</option>
+                                                <option value="Dropper JEE Target 2.0 2026">Dropper JEE Target 2.0 2026</option>
+                                                <option value="2 year JEE Target 2.0 2027">2 year JEE Target 2.0 2027</option>
+                                                <option value="Class 9th [School+JEE+NEET] 2.0 2026">Class 9th [School+JEE+NEET] 2.0 2026</option>
+                                                <option value="Class 8th [School+JEE+NEET] 2028 (3 Year)">Class 8th [School+JEE+NEET] 2028 (3 Year)</option>
+                                            </select>
+                                        </div>
+                                        <div class="d-grid">
+                                            <button type="submit" class="btn btn-pw">Get Discount Instructions</button>
+                                        </div>
+                                    </form>
+                                    
+                                    <div id="loader" class="loader"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mt-4 mt-lg-0">
+                                <div class="p-4 bg-white rounded">
+                                    <h4 class="mb-4">Discount Benefits</h4>
+                                    <div class="d-flex align-items-start mb-3">
+                                        <div class="me-3 text-success">
+                                            <i class="fas fa-check-circle fa-lg"></i>
+                                        </div>
+                                        <div>
+                                            <h6>Instant ₹4500 Off</h6>
+                                            <p class="small text-muted">Apply the coupon during checkout to get immediate discount on your course fee.</p>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex align-items-start mb-3">
+                                        <div class="me-3 text-success">
+                                            <i class="fas fa-check-circle fa-lg"></i>
+                                        </div>
+                                        <div>
+                                            <h6>Flexible Payment Options</h6>
+                                            <p class="small text-muted">Pay just ₹500 to book your seat and remaining fee in easy installments.</p>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex align-items-start mb-3">
+                                        <div class="me-3 text-success">
+                                            <i class="fas fa-check-circle fa-lg"></i>
+                                        </div>
+                                        <div>
+                                            <h6>Additional Savings</h6>
+                                            <p class="small text-muted">Save even more when you choose full payment option after applying the coupon.</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <h5 class="mt-4">Example Discount</h5>
+                                    <div class="bg-light p-3 rounded">
+                                        <div class="d-flex justify-content-between">
+                                            <span>Course Fee:</span>
+                                            <span>₹58,000</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between text-success">
+                                            <span>Coupon Discount:</span>
+                                            <span>-₹4,500</span>
+                                        </div>
+                                        <hr class="my-2">
+                                        <div class="d-flex justify-content-between fw-bold">
+                                            <span>Payable Amount:</span>
+                                            <span>₹53,500</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-5">
+        <div class="container">
+            <h2 class="section-title text-center mb-5">Frequently Asked Questions</h2>
+            
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="faq-card">
+                        <div class="faq-question" data-bs-toggle="collapse" data-bs-target="#faq1">
+                            <i class="fas fa-question-circle me-2"></i> What makes PW Power Batches different from regular batches?
+                        </div>
+                        <div id="faq1" class="collapse show faq-answer">
+                            PW Power Batches offer small group learning (limited to ~100 students), two-way live interaction, personalized doubt resolution, dedicated mentors, comprehensive test series, and performance tracking. The focus is on quality teaching with individual attention.
                         </div>
                     </div>
                     
-                    <div class="input-group">
-                        <label>Transfer Speed</label>
-                        <select id="transfer-speed">
-                            <option value="fast">Fast (64KB chunks)</option>
-                            <option value="faster">Faster (128KB chunks)</option>
-                            <option value="fastest">Fastest (256KB chunks)</option>
-                        </select>
+                    <div class="faq-card">
+                        <div class="faq-question collapsed" data-bs-toggle="collapse" data-bs-target="#faq2">
+                            <i class="fas fa-question-circle me-2"></i> How do I apply the discount coupon during enrollment?
+                        </div>
+                        <div id="faq2" class="collapse faq-answer">
+                            After receiving your coupon code via email, proceed to the PW Power Batch enrollment page. During checkout, you'll find an "Offers & Discounts" section where you can enter your coupon code. The discount will be automatically applied to your total fee.
+                        </div>
                     </div>
                     
-                    <button class="btn" id="reset-settings-btn">Reset Settings</button>
+                    <div class="faq-card">
+                        <div class="faq-question collapsed" data-bs-toggle="collapse" data-bs-target="#faq3">
+                            <i class="fas fa-question-circle me-2"></i> What are the payment options available?
+                        </div>
+                        <div id="faq3" class="collapse faq-answer">
+                            You can choose between:
+                            <ul>
+                                <li>Full payment (with maximum discount)</li>
+                                <li>Installment option by PW (auto debit, no documentation needed)</li>
+                                <li>EMI finance option through Simplify</li>
+                            </ul>
+                            For most 1-year batches, you can pay ₹500 to book your seat and the remaining in 2 installments.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-card">
+                        <div class="faq-question collapsed" data-bs-toggle="collapse" data-bs-target="#faq4">
+                            <i class="fas fa-question-circle me-2"></i> Can I attend demo classes before enrolling?
+                        </div>
+                        <div id="faq4" class="collapse faq-answer">
+                            Yes, you can book free demo classes for Power Batches. Visit the PW website, select your course and class, and choose a convenient time slot for the demo. This helps you experience the teaching style before making a commitment.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-card">
+                        <div class="faq-question collapsed" data-bs-toggle="collapse" data-bs-target="#faq5">
+                            <i class="fas fa-question-circle me-2"></i> What if I miss a live class?
+                        </div>
+                        <div id="faq5" class="collapse faq-answer">
+                            All live classes are recorded and made available to students. You can access the recorded lectures, PDF notes, and other study materials anytime through your student dashboard. Additionally, you can clarify doubts through the dedicated doubt support system.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-card">
+                        <div class="faq-question collapsed" data-bs-toggle="collapse" data-bs-target="#faq6">
+                            <i class="fas fa-question-circle me-2"></i> Is there any scholarship or additional discount available?
+                        </div>
+                        <div id="faq6" class="collapse faq-answer">
+                            The ₹4500 coupon discount is currently the best available offer for Power Batches. However, you may check for additional scholarship tests or special promotions that PW occasionally conducts for meritorious students.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <img src="https://pnghdpro.com/wp-content/themes/pnghdpro/download/social-media-and-brands/physics-wallah-logo.png" alt="Physics Wallah Logo" class="mb-3" style="height: 40px;">
+                    <p>PW Power Batches provide premium quality education with personalized attention to help students achieve their academic goals.</p>
+                    <div class="social-icons mt-4">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="https://t.me/pwpowerbatches"><i class="fab fa-telegram"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+                    <div class="footer-links">
+                        <h5>Quick Links</h5>
+                        <a href="#features">Features</a>
+                        <a href="#batches">Batches</a>
+                        <a href="#discount">Discount</a>
+                        <a href="#faq">FAQ</a>
+                        <a href="https://www.pw.live/contact-us">Contact</a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 mb-4 mb-md-0">
+                    <div class="footer-links">
+                        <h5>Popular Batches</h5>
+                        <a href="#">12th JEE Target 2.0 2026</a>
+                        <a href="#">12th NEET Target 2.0 2026</a>
+                        <a href="#">Dropper JEE Target 2.0 2026</a>
+                        <a href="#">2 year JEE Target 2.0 2027</a>
+                        <a href="#">Class 9th School+JEE+NEET</a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4">
+                    <div class="footer-links">
+                        <h5>Contact Info</h5>
+                        <p><i class="fas fa-map-marker-alt me-2"></i> Physics Wallah, Noida, India</p>
+                        <p><i class="fas fa-phone-alt me-2"></i> +91 1234567890</p>
+                        <p><i class="fas fa-envelope me-2"></i> powerbatch@pw.live</p>
+                        <a href="https://t.me/pwpowerbatches" class="btn btn-outline-light mt-3">
+                            <i class="fab fa-telegram me-2"></i> Join Telegram
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright text-center">
+                <p class="mb-0">© 2025 Physics Wallah Power Batch. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Success Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-0 justify-content-end">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center py-4">
+                    <div class="success-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h4 class="mb-3">Success!</h4>
+                    <p>Your Discount instructions have been sent to your email address.</p>
+                    <p>Check your inbox for details on how to apply the ₹4500 Coupon Code when booking your seat.</p>
+                    <div class="mt-4">
+                        <a href="https://www.pw.live/power-batch" class="btn btn-pw">Proceed to PW Website</a>
+                    </div>
+                    <div class="mt-3">
+                        <a href="https://t.me/pwpowerbatches" class="btn btn-outline-secondary">
+                            <i class="fab fa-telegram me-2"></i> Join Telegram Community
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
-    <div class="toast" id="toast"></div>
-    
-    <script src="https://unpkg.com/peerjs@1.4.7/dist/peerjs.min.js"></script>
+    <!-- Custom JS -->
     <script>
-        // DOM Elements
-        const tabs = document.querySelectorAll('.tab');
-        const tabContents = document.querySelectorAll('.tab-content');
-        const dropArea = document.getElementById('drop-area');
-        const browseBtn = document.getElementById('browse-btn');
-        const fileInput = document.getElementById('file-input');
-        const filePreview = document.getElementById('file-preview');
-        const sendFilesBtn = document.getElementById('send-files-btn');
-        const urlInput = document.getElementById('url-input');
-        const sendUrlBtn = document.getElementById('send-url-btn');
-        const progressContainer = document.getElementById('progress-container');
-        const progressBar = document.getElementById('progress-bar');
-        const progressText = document.getElementById('progress-text');
-        const connectionStatus = document.getElementById('connection-status');
-        const connectionText = document.getElementById('connection-text');
-        const peerNameInput = document.getElementById('peer-name');
-        const peerIdInput = document.getElementById('peer-id');
-        const copyPeerIdBtn = document.getElementById('copy-peer-id');
-        const remotePeerIdInput = document.getElementById('remote-peer-id');
-        const connectBtn = document.getElementById('connect-btn');
-        const receiveConnectionStatus = document.getElementById('receive-connection-status');
-        const receiveConnectionText = document.getElementById('receive-connection-text');
-        const receivePeerIdInput = document.getElementById('receive-peer-id');
-        const copyReceivePeerIdBtn = document.getElementById('copy-receive-peer-id');
-        const receivedItemsContainer = document.getElementById('received-items');
-        const noItemsMessage = document.getElementById('no-items-message');
-        const toast = document.getElementById('toast');
-        const connectionStats = document.getElementById('connection-stats');
-        const connectionType = document.getElementById('connection-type');
-        const connectionTime = document.getElementById('connection-time');
-        const connectionSpeed = document.getElementById('connection-speed');
-        const settingsPeerName = document.getElementById('settings-peer-name');
-        const settingsPeerId = document.getElementById('settings-peer-id');
-        const saveLocation = document.getElementById('save-location');
-        const transferSpeed = document.getElementById('transfer-speed');
-        const resetSettingsBtn = document.getElementById('reset-settings-btn');
-        
-        // Application State
-        let peer;
-        let conn;
-        let currentPeerId;
-        let filesToSend = [];
-        let connectionStartTime = 0;
-        let connectionTimer = null;
-        let speedTimer = null;
-        let lastBytesTransferred = 0;
-        let peerName = 'User-' + Math.floor(Math.random() * 1000);
-        let connectionTypeSetting = 'auto';
-        let defaultSaveLocation = 'downloads';
-        let chunkSize = 65536; // 64KB by default
-        let activeTransfers = new Map();
-        let fileSystemHandle;
-        
-        // Initialize from localStorage
-        function loadSettings() {
-            const savedName = localStorage.getItem('peerName');
-            if (savedName) {
-                peerName = savedName;
-                peerNameInput.value = savedName;
-                settingsPeerName.value = savedName;
-            }
+        // Form submission handler
+        document.getElementById('couponForm').addEventListener('submit', function(e) {
+            e.preventDefault();
             
-            const savedConnType = localStorage.getItem('connectionType');
-            if (savedConnType) {
-                connectionTypeSetting = savedConnType;
-                document.getElementById(`conn-type-${savedConnType}`).checked = true;
-            }
+            // Show loader
+            document.getElementById('loader').style.display = 'block';
             
-            const savedLocation = localStorage.getItem('saveLocation');
-            if (savedLocation) {
-                defaultSaveLocation = savedLocation;
-                saveLocation.value = savedLocation;
-            }
+            // Fixed coupon code
+            const couponCode = 'YUGNA00001';
             
-            const savedSpeed = localStorage.getItem('transferSpeed');
-            if (savedSpeed) {
-                transferSpeed.value = savedSpeed;
-                updateChunkSize(savedSpeed);
-            }
-        }
-        
-        // Update chunk size based on speed setting
-        function updateChunkSize(speed) {
-            switch(speed) {
-                case 'fast': chunkSize = 65536; break; // 64KB
-                case 'faster': chunkSize = 131072; break; // 128KB
-                case 'fastest': chunkSize = 262144; break; // 256KB
-                default: chunkSize = 65536;
-            }
-        }
-        
-        // Save settings
-        function saveSettings() {
-            localStorage.setItem('peerName', peerName);
-            localStorage.setItem('connectionType', connectionTypeSetting);
-            localStorage.setItem('saveLocation', defaultSaveLocation);
-            localStorage.setItem('transferSpeed', transferSpeed.value);
-        }
-        
-        // Reset settings
-        resetSettingsBtn.addEventListener('click', () => {
-            localStorage.clear();
-            peerName = 'User-' + Math.floor(Math.random() * 1000);
-            peerNameInput.value = peerName;
-            settingsPeerName.value = peerName;
-            connectionTypeSetting = 'auto';
-            document.getElementById('conn-type-auto').checked = true;
-            defaultSaveLocation = 'downloads';
-            saveLocation.value = 'downloads';
-            transferSpeed.value = 'fast';
-            updateChunkSize('fast');
-            showToast('Settings reset');
-        });
-        
-        // Update peer name
-        peerNameInput.addEventListener('change', () => {
-            peerName = peerNameInput.value.trim() || 'User-' + Math.floor(Math.random() * 1000);
-            settingsPeerName.value = peerName;
-            saveSettings();
-        });
-        
-        settingsPeerName.addEventListener('change', () => {
-            peerName = settingsPeerName.value.trim() || 'User-' + Math.floor(Math.random() * 1000);
-            peerNameInput.value = peerName;
-            saveSettings();
-        });
-        
-        // Update connection type
-        document.querySelectorAll('input[name="conn-type"]').forEach(radio => {
-            radio.addEventListener('change', () => {
-                connectionTypeSetting = radio.id.replace('conn-type-', '');
-                saveSettings();
-            });
-        });
-        
-        // Update save location
-        saveLocation.addEventListener('change', () => {
-            defaultSaveLocation = saveLocation.value;
-            saveSettings();
-        });
-        
-        // Update transfer speed
-        transferSpeed.addEventListener('change', () => {
-            updateChunkSize(transferSpeed.value);
-            saveSettings();
-        });
-        
-        // Initialize PeerJS with optimized configuration
-        function initializePeer() {
-            // Generate a random peer ID or use saved one
-            const savedPeerId = localStorage.getItem('peerId');
-            const randomId = savedPeerId || 'yugal-' + Math.random().toString(36).substr(2, 8);
-            
-            // Optimized PeerJS configuration
-            const config = {
-                debug: 1,
-                config: {
-                    iceServers: [
-                        { urls: 'stun:stun.l.google.com:19302' },
-                        { urls: 'stun:stun1.l.google.com:19302' },
-                        { urls: 'stun:stun2.l.google.com:19302' },
-                        { 
-                            urls: 'turn:global.relay.metered.ca:80',
-                            username: '14a7c0b0b1b5b5b5b5b5',
-                            credential: '5b5b5b5b5b5b5b5b5b5b'
-                        },
-                        { 
-                            urls: 'turn:global.relay.metered.ca:80?transport=tcp',
-                            username: '14a7c0b0b1b5b5b5b5b5',
-                            credential: '5b5b5b5b5b5b5b5b5b5b'
-                        }
-                    ],
-                    iceTransportPolicy: connectionTypeSetting === 'relay' ? 'relay' : 'all',
-                    iceCandidatePoolSize: 5,
-                    bundlePolicy: 'max-bundle',
-                    rtcpMuxPolicy: 'require'
-                }
+            // Form data
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                batchType: document.getElementById('batchType').value,
+                couponCode: couponCode,
+                timestamp: new Date().toISOString()
             };
             
-            peer = new Peer(randomId, config);
-            
-            peer.on('open', (id) => {
-                currentPeerId = id;
-                peerIdInput.value = id;
-                receivePeerIdInput.value = id;
-                settingsPeerId.value = id;
-                updateConnectionStatus(true, 'Connected', connectionStatus, connectionText);
-                updateConnectionStatus(true, 'Connected', receiveConnectionStatus, receiveConnectionText);
-                
-                // Save peer ID if not already saved
-                if (!savedPeerId) {
-                    localStorage.setItem('peerId', id);
-                }
-            });
-            
-            peer.on('error', (err) => {
-                console.error('Peer error:', err);
-                showToast(`Error: ${err.type || err.message}`);
-                updateConnectionStatus(false, 'Disconnected', connectionStatus, connectionText);
-                updateConnectionStatus(false, 'Disconnected', receiveConnectionStatus, receiveConnectionText);
-            });
-            
-            peer.on('connection', (connection) => {
-                // Close existing connection if any
-                if (conn && conn.open) {
-                    conn.close();
-                }
-                
-                conn = connection;
-                setupConnectionHandlers(conn);
-            });
-        }
-        
-        // Setup connection handlers with optimized data channel
-        function setupConnectionHandlers(connection) {
-            // Optimize data channel for faster transfer
-            connection.on('open', () => {
-                updateConnectionStatus(true, 'Connected to peer', connectionStatus, connectionText);
-                updateConnectionStatus(true, 'Connected to peer', receiveConnectionStatus, receiveConnectionText);
-                showToast(`Connected to ${connection.metadata.name || 'peer'}`);
-                
-                // Start connection timer and speed monitor
-                connectionStartTime = Date.now();
-                lastBytesTransferred = 0;
-                connectionStats.style.display = 'flex';
-                updateConnectionTimer();
-                connectionTimer = setInterval(updateConnectionTimer, 1000);
-                speedTimer = setInterval(updateConnectionSpeed, 1000);
-                
-                // Send peer info immediately
-                connection.send({
-                    type: 'peer-info',
-                    name: peerName
-                });
-            });
-            
-            // Handle incoming data with buffering optimization
-            connection.on('data', (data) => {
-                try {
-                    handleIncomingData(data);
-                } catch (err) {
-                    console.error('Data handling error:', err);
-                }
-            });
-            
-            connection.on('close', () => {
-                updateConnectionStatus(false, 'Disconnected', connectionStatus, connectionText);
-                updateConnectionStatus(false, 'Disconnected', receiveConnectionStatus, receiveConnectionText);
-                showToast('Connection closed');
-                clearInterval(connectionTimer);
-                clearInterval(speedTimer);
-                connectionStats.style.display = 'none';
-                activeTransfers.clear();
-            });
-            
-            connection.on('error', (err) => {
-                console.error('Connection error:', err);
-                showToast(`Connection error: ${err.message}`);
-            });
-        }
-        
-        // Update connection timer
-        function updateConnectionTimer() {
-            const seconds = Math.floor((Date.now() - connectionStartTime) / 1000);
-            connectionTime.textContent = `${seconds}s`;
-            
-            // Update connection type
-            if (conn && conn.connection) {
-                const iceConnectionState = conn.connection.iceConnectionState;
-                if (iceConnectionState === 'connected') {
-                    const usingRelay = conn.connection.getConfiguration().iceTransportPolicy === 'relay';
-                    connectionType.textContent = usingRelay ? 'Relay' : 'Direct';
-                }
-            }
-        }
-        
-        // Update connection speed
-        function updateConnectionSpeed() {
-            if (conn && conn._dc) {
-                const stats = conn._dc.getStats();
-                stats.then(report => {
-                    for (const stat of report.values()) {
-                        if (stat.type === 'data-channel') {
-                            const bytesTransferred = stat.bytesReceived + stat.bytesSent;
-                            const bytesDelta = bytesTransferred - lastBytesTransferred;
-                            const speedMB = (bytesDelta / (1024 * 1024)).toFixed(2);
-                            connectionSpeed.textContent = `${speedMB} MB/s`;
-                            lastBytesTransferred = bytesTransferred;
-                            break;
-                        }
-                    }
-                });
-            }
-        }
-        
-        // Connect to another peer with optimized settings
-        connectBtn.addEventListener('click', () => {
-            const remoteId = remotePeerIdInput.value.trim();
-            if (!remoteId) {
-                showToast('Please enter a peer ID');
-                return;
-            }
-            
-            if (conn && conn.open) {
-                conn.close();
-            }
-            
-            // Create connection with optimized parameters
-            conn = peer.connect(remoteId, {
-                reliable: true,
-                serialization: 'binary',
-                metadata: {
-                    name: peerName
+            // In a real implementation, you would call your Apps Script web app here
+            // Example:
+            const scriptUrl = 'YOUR_APPS_SCRIPT_WEB_APP_URL';
+            fetch(scriptUrl, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
                 },
-                dcInit: {
-                    ordered: false, // Faster transfer at the cost of order guarantees
-                    maxRetransmits: 0, // Disable retransmits for faster transfer
-                    maxPacketLifeTime: 1000 // 1 second packet lifetime
-                }
+                body: JSON.stringify(formData)
+            })
+            .then(() => {
+                // Hide loader
+                document.getElementById('loader').style.display = 'none';
+                
+                // Show success modal
+                const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+                successModal.show();
+                
+                // Reset form
+                document.getElementById('couponForm').reset();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('loader').style.display = 'none';
+                alert('An error occurred. Please try again later.');
             });
             
-            setupConnectionHandlers(conn);
-        });
-        
-        // Copy peer ID buttons
-        copyPeerIdBtn.addEventListener('click', () => {
-            peerIdInput.select();
-            document.execCommand('copy');
-            showToast('Peer ID copied');
-        });
-        
-        copyReceivePeerIdBtn.addEventListener('click', () => {
-            receivePeerIdInput.select();
-            document.execCommand('copy');
-            showToast('Peer ID copied');
-        });
-        
-        // File handling with optimized drag and drop
-        browseBtn.addEventListener('click', () => {
-            fileInput.click();
-        });
-        
-        fileInput.addEventListener('change', (e) => {
-            handleFiles(e.target.files);
-            fileInput.value = '';
-        });
-        
-        // Optimized drag and drop handlers
-        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-            dropArea.addEventListener(eventName, preventDefaults, false);
-            document.body.addEventListener(eventName, preventDefaults, false);
-        });
-        
-        function preventDefaults(e) {
-            e.preventDefault();
-            e.stopPropagation();
-        }
-        
-        ['dragenter', 'dragover'].forEach(eventName => {
-            dropArea.addEventListener(eventName, highlight, false);
-        });
-        
-        ['dragleave', 'drop'].forEach(eventName => {
-            dropArea.addEventListener(eventName, unhighlight, false);
-        });
-        
-        function highlight() {
-            dropArea.classList.add('highlight');
-        }
-        
-        function unhighlight() {
-            dropArea.classList.remove('highlight');
-        }
-        
-        dropArea.addEventListener('drop', (e) => {
-            const dt = e.dataTransfer;
-            const files = dt.files;
-            handleFiles(files);
-        });
-        
-        function handleFiles(files) {
-            filesToSend = Array.from(files);
-            updatePreview();
-            
-            if (filesToSend.length > 0) {
-                sendFilesBtn.style.display = 'block';
-            } else {
-                sendFilesBtn.style.display = 'none';
-            }
-        }
-        
-        function updatePreview() {
-            filePreview.innerHTML = '';
-            
-            filesToSend.forEach((file, index) => {
-                const fileItem = document.createElement('div');
-                fileItem.className = 'file-item';
+            // For demo purposes, we'll just show the modal after a delay
+            setTimeout(function() {
+                // Hide loader
+                document.getElementById('loader').style.display = 'none';
                 
-                if (file.type.startsWith('image/')) {
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        const img = document.createElement('img');
-                        img.src = e.target.result;
-                        fileItem.appendChild(img);
-                        
-                        const fileName = document.createElement('div');
-                        fileName.className = 'file-name';
-                        fileName.textContent = file.name;
-                        fileItem.appendChild(fileName);
-                        
-                        const removeBtn = document.createElement('button');
-                        removeBtn.className = 'remove-btn';
-                        removeBtn.innerHTML = '×';
-                        removeBtn.addEventListener('click', (e) => {
-                            e.stopPropagation();
-                            removeFile(index);
-                        });
-                        fileItem.appendChild(removeBtn);
-                        
-                        filePreview.appendChild(fileItem);
-                    };
-                    reader.readAsDataURL(file);
-                } else {
-                    const fileIcon = document.createElement('div');
-                    fileIcon.textContent = getFileIcon(file);
-                    fileIcon.style.fontSize = '2rem';
-                    fileItem.appendChild(fileIcon);
-                    
-                    const fileName = document.createElement('div');
-                    fileName.className = 'file-name';
-                    fileName.textContent = file.name;
-                    fileItem.appendChild(fileName);
-                    
-                    const removeBtn = document.createElement('button');
-                    removeBtn.className = 'remove-btn';
-                    removeBtn.innerHTML = '×';
-                    removeBtn.addEventListener('click', (e) => {
-                        e.stopPropagation();
-                        removeFile(index);
-                    });
-                    fileItem.appendChild(removeBtn);
-                    
-                    filePreview.appendChild(fileItem);
-                }
-            });
-        }
-        
-        function getFileIcon(file) {
-            const type = file.type.split('/')[0];
-            const ext = file.name.split('.').pop().toLowerCase();
-            
-            if (type === 'image') return '🖼️';
-            if (type === 'video') return '🎬';
-            if (type === 'audio') return '🎵';
-            
-            switch(ext) {
-                case 'pdf': return '📄';
-                case 'doc':
-                case 'docx': return '📝';
-                case 'xls':
-                case 'xlsx': return '📊';
-                case 'ppt':
-                case 'pptx': return '📑';
-                case 'zip':
-                case 'rar':
-                case '7z': return '🗄️';
-                default: return '📁';
-            }
-        }
-        
-        function removeFile(index) {
-            filesToSend.splice(index, 1);
-            updatePreview();
-            
-            if (filesToSend.length === 0) {
-                sendFilesBtn.style.display = 'none';
-            }
-        }
-        
-        // Optimized file sending with chunk streaming
-        sendFilesBtn.addEventListener('click', async () => {
-            if (!conn || !conn.open) {
-                showToast('Not connected to any peer');
-                return;
-            }
-            
-            if (filesToSend.length === 0) {
-                showToast('No files selected');
-                return;
-            }
-            
-            progressContainer.style.display = 'block';
-            progressBar.style.width = '0%';
-            progressText.textContent = 'Preparing files...';
-            
-            // Create transfer ID
-            const transferId = Date.now().toString(36) + Math.random().toString(36).substr(2, 4);
-            
-            // Calculate total size for progress tracking
-            const totalSize = filesToSend.reduce((sum, file) => sum + file.size, 0);
-            let transferredSize = 0;
-            
-            // Add to active transfers
-            activeTransfers.set(transferId, {
-                files: filesToSend,
-                totalSize: totalSize,
-                transferredSize: 0,
-                startTime: Date.now()
-            });
-            
-            // Add to sender's transfer list
-            addTransferItem({
-                type: 'files',
-                transferId: transferId,
-                files: filesToSend.map(file => ({
-                    name: file.name,
-                    type: file.type,
-                    size: file.size
-                })),
-                status: 'Starting transfer...',
-                sender: 'You',
-                timestamp: new Date()
-            });
-            
-            // Send metadata first
-            conn.send({
-                type: 'files',
-                transferId: transferId,
-                count: filesToSend.length,
-                files: filesToSend.map(file => ({
-                    name: file.name,
-                    type: file.type,
-                    size: file.size,
-                    lastModified: file.lastModified
-                })),
-                sender: peerName
-            });
-            
-            // Send files in parallel with chunk streaming
-            const transferPromises = filesToSend.map((file, fileIndex) => {
-                return new Promise((resolve) => {
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        const fileData = e.target.result;
-                        const totalChunks = Math.ceil(fileData.byteLength / chunkSize);
-                        
-                        // Send file header
-                        conn.send({
-                            type: 'file-start',
-                            transferId: transferId,
-                            fileIndex: fileIndex,
-                            totalChunks: totalChunks
-                        });
-                        
-                        // Send chunks
-                        for (let chunkIndex = 0; chunkIndex < totalChunks; chunkIndex++) {
-                            const start = chunkIndex * chunkSize;
-                            const end = Math.min(start + chunkSize, fileData.byteLength);
-                            const chunk = fileData.slice(start, end);
-                            
-                            conn.send({
-                                type: 'file-chunk',
-                                transferId: transferId,
-                                fileIndex: fileIndex,
-                                chunkIndex: chunkIndex,
-                                data: chunk
-                            });
-                            
-                            // Update progress
-                            transferredSize += chunk.byteLength;
-                            const progress = Math.round((transferredSize / totalSize) * 100);
-                            progressBar.style.width = `${progress}%`;
-                            progressText.textContent = `Sending ${file.name} (${progress}%)`;
-                            
-                            // Update transfer status
-                            updateTransferStatus(transferId, `Sending ${file.name} (${progress}%)`);
-                            
-                            // Throttle slightly to prevent overwhelming the connection
-                            if (chunkIndex % 10 === 0) {
-                                setTimeout(() => {}, 0);
-                            }
-                        }
-                        
-                        // Send file end marker
-                        conn.send({
-                            type: 'file-end',
-                            transferId: transferId,
-                            fileIndex: fileIndex
-                        });
-                        
-                        resolve();
-                    };
-                    reader.readAsArrayBuffer(file);
-                });
-            });
-            
-            // Wait for all files to be sent
-            await Promise.all(transferPromises);
-            
-            // Mark transfer as complete
-            const transferTime = (Date.now() - activeTransfers.get(transferId).startTime) / 1000;
-            updateTransferStatus(transferId, `Completed (${transferTime.toFixed(1)}s)`);
-            activeTransfers.delete(transferId);
-            
-            progressText.textContent = 'Transfer complete!';
-            showToast('Files sent successfully');
-            
-            filesToSend = [];
-            updatePreview();
-            sendFilesBtn.style.display = 'none';
-            
-            // Hide progress after 3 seconds
-            setTimeout(() => {
-                progressContainer.style.display = 'none';
-            }, 3000);
+                // Show success modal
+                const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+                successModal.show();
+                
+                // Reset form
+                document.getElementById('couponForm').reset();
+            }, 2000);
         });
         
-        // Send URL with immediate feedback
-        sendUrlBtn.addEventListener('click', () => {
-            const url = urlInput.value.trim();
-            if (!url) {
-                showToast('Please enter a URL');
-                return;
-            }
-            
-            if (!conn || !conn.open) {
-                showToast('Not connected to any peer');
-                return;
-            }
-            
-            // Validate URL
-            try {
-                new URL(url);
-            } catch (e) {
-                showToast('Please enter a valid URL');
-                return;
-            }
-            
-            const transferId = Date.now().toString(36) + Math.random().toString(36).substr(2, 4);
-            
-            conn.send({
-                type: 'url',
-                url: url,
-                transferId: transferId,
-                sender: peerName
-            });
-            
-            // Add to sender's transfer list
-            addTransferItem({
-                type: 'url',
-                transferId: transferId,
-                url: url,
-                status: 'Sent',
-                sender: 'You',
-                timestamp: new Date()
-            });
-            
-            showToast('URL sent');
-            urlInput.value = '';
+        // Initialize tooltips
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
         });
-        
-        // Handle incoming data with optimized transfer handling
-        function handleIncomingData(data) {
-            try {
-                if (data.type === 'peer-info') {
-                    // Update peer name in UI if needed
-                    return;
-                } else if (data.type === 'url') {
-                    addTransferItem({
-                        type: 'url',
-                        transferId: data.transferId,
-                        url: data.url,
-                        status: 'Received',
-                        sender: data.sender || 'Unknown',
-                        timestamp: new Date()
-                    });
-                    showToast(`Received URL from ${data.sender || 'peer'}`);
-                } else if (data.type === 'files') {
-                    // Initialize transfer
-                    activeTransfers.set(data.transferId, {
-                        transferId: data.transferId,
-                        files: data.files,
-                        sender: data.sender || 'Unknown',
-                        receivedChunks: Array(data.count).fill().map(() => []),
-                        receivedCount: 0,
-                        startTime: Date.now(),
-                        fileStatus: Array(data.count).fill(0) // 0 = not started, 1 = in progress, 2 = complete
-                    });
-                    
-                    addTransferItem({
-                        type: 'files',
-                        transferId: data.transferId,
-                        files: data.files,
-                        status: 'Receiving...',
-                        sender: data.sender || 'Unknown',
-                        timestamp: new Date()
-                    });
-                    
-                    showToast(`Receiving ${data.count} files from ${data.sender || 'peer'}`);
-                } else if (data.type === 'file-start') {
-                    // Mark file as started
-                    const transfer = activeTransfers.get(data.transferId);
-                    if (transfer) {
-                        transfer.fileStatus[data.fileIndex] = 1;
-                        updateTransferStatus(data.transferId, `Receiving ${transfer.files[data.fileIndex].name}...`);
-                    }
-                } else if (data.type === 'file-chunk') {
-                    receiveFileChunk(data);
-                } else if (data.type === 'file-end') {
-                    // Mark file as complete
-                    const transfer = activeTransfers.get(data.transferId);
-                    if (transfer) {
-                        transfer.fileStatus[data.fileIndex] = 2;
-                        transfer.receivedCount++;
-                        
-                        // Check if all files are received
-                        if (transfer.receivedCount === transfer.files.length) {
-                            const transferTime = (Date.now() - transfer.startTime) / 1000;
-                            updateTransferStatus(data.transferId, `Completed (${transferTime.toFixed(1)}s)`);
-                            showToast('All files received');
-                            activeTransfers.delete(data.transferId);
-                        } else {
-                            updateTransferStatus(data.transferId, `Received ${transfer.receivedCount}/${transfer.files.length} files`);
-                        }
-                    }
-                }
-            } catch (err) {
-                console.error('Error handling incoming data:', err);
-            }
-        }
-        
-        function receiveFileChunk(chunkData) {
-            const transfer = activeTransfers.get(chunkData.transferId);
-            if (!transfer) return;
-            
-            // Store chunk
-            transfer.receivedChunks[chunkData.fileIndex][chunkData.chunkIndex] = chunkData.data;
-            
-            // Calculate progress
-            const file = transfer.files[chunkData.fileIndex];
-            const receivedChunks = transfer.receivedChunks[chunkData.fileIndex].filter(Boolean).length;
-            
-            // Update status periodically to reduce UI updates
-            if (receivedChunks % 10 === 0 || receivedChunks === 1) {
-                const progress = Math.round((receivedChunks / (file.size / chunkSize)) * 100);
-                updateTransferStatus(transfer.transferId, `Receiving ${file.name} (${progress}%)`);
-            }
-            
-            // When all chunks are received, create blob
-            if (receivedChunks === Math.ceil(file.size / chunkSize)) {
-                const chunks = transfer.receivedChunks[chunkData.fileIndex];
-                const blob = new Blob(chunks, { type: file.type });
-                
-                // Update transfer with received file
-                updateTransferWithFile(transfer.transferId, chunkData.fileIndex, {
-                    name: file.name,
-                    type: file.type,
-                    size: file.size,
-                    blob: blob
-                });
-            }
-        }
-        
-        function addTransferItem(item) {
-            noItemsMessage.style.display = 'none';
-            
-            const transferItem = document.createElement('div');
-            transferItem.className = 'transfer-item';
-            transferItem.id = `transfer-${item.transferId}`;
-            
-            if (item.type === 'url') {
-                transferItem.innerHTML = `
-                    <div class="transfer-icon">🔗</div>
-                    <div class="transfer-info">
-                        <div class="transfer-name">URL Shared</div>
-                        <div class="transfer-status">From ${item.sender} • ${formatDate(item.timestamp)}</div>
-                        <div class="transfer-url" style="margin-top: 0.25rem; font-size: 0.875rem; color: var(--gray-700);">${item.url}</div>
-                    </div>
-                    <div class="transfer-actions">
-                        <a href="${item.url}" target="_blank" class="btn btn-sm btn-outline">Open</a>
-                    </div>
-                `;
-            } else if (item.type === 'files') {
-                const fileCount = item.files.length;
-                const totalSize = item.files.reduce((sum, file) => sum + file.size, 0);
-                
-                transferItem.innerHTML = `
-                    <div class="transfer-icon">📦</div>
-                    <div class="transfer-info">
-                        <div class="transfer-name">${fileCount} file${fileCount > 1 ? 's' : ''} (${formatFileSize(totalSize)})</div>
-                        <div class="transfer-status">From ${item.sender} • ${formatDate(item.timestamp)}</div>
-                        <div class="transfer-progress" style="margin-top: 0.25rem; font-size: 0.875rem; color: var(--gray-700);">${item.status}</div>
-                    </div>
-                    <div class="transfer-actions" id="actions-${item.transferId}">
-                        ${item.status.includes('Completed') ? `
-                            <button class="btn btn-sm" onclick="downloadFiles('${item.transferId}')">Download</button>
-                            <button class="btn btn-sm btn-outline" onclick="saveFiles('${item.transferId}')">Save As...</button>
-                        ` : ''}
-                    </div>
-                `;
-                
-                // Store files data for download
-                if (item.filesData) {
-                    transferItem.dataset.filesData = JSON.stringify(item.filesData);
-                }
-            }
-            
-            // Add to top of the list
-            receivedItemsContainer.insertBefore(transferItem, receivedItemsContainer.firstChild);
-        }
-        
-        function updateTransferStatus(transferId, status) {
-            const transferItem = document.getElementById(`transfer-${transferId}`);
-            if (transferItem) {
-                const progressElement = transferItem.querySelector('.transfer-progress');
-                if (progressElement) {
-                    progressElement.textContent = status;
-                }
-                
-                // Update actions if transfer is complete
-                if (status.includes('Completed')) {
-                    const actionsElement = transferItem.querySelector('.transfer-actions');
-                    if (actionsElement && !actionsElement.querySelector('.btn')) {
-                        actionsElement.innerHTML = `
-                            <button class="btn btn-sm" onclick="downloadFiles('${transferId}')">Download</button>
-                            <button class="btn btn-sm btn-outline" onclick="saveFiles('${transferId}')">Save As...</button>
-                        `;
-                    }
-                }
-            }
-        }
-        
-        function updateTransferWithFile(transferId, fileIndex, fileData) {
-            const transferItem = document.getElementById(`transfer-${transferId}`);
-            if (transferItem) {
-                let filesData = [];
-                try {
-                    filesData = JSON.parse(transferItem.dataset.filesData || '[]');
-                } catch (e) {
-                    filesData = [];
-                }
-                
-                filesData[fileIndex] = fileData;
-                transferItem.dataset.filesData = JSON.stringify(filesData);
-            }
-        }
-        
-        // Global function for downloading files
-        window.downloadFiles = function(transferId) {
-            const transferItem = document.getElementById(`transfer-${transferId}`);
-            if (transferItem) {
-                const filesData = JSON.parse(transferItem.dataset.filesData || '[]');
-                
-                filesData.forEach(file => {
-                    if (file.blob) {
-                        const url = URL.createObjectURL(file.blob);
-                        const a = document.createElement('a');
-                        a.href = url;
-                        a.download = file.name;
-                        a.style.display = 'none';
-                        document.body.appendChild(a);
-                        a.click();
-                        document.body.removeChild(a);
-                        
-                        // Revoke the blob URL after download
-                        setTimeout(() => URL.revokeObjectURL(url), 100);
-                    }
-                });
-            }
-        };
-        
-        // Global function for saving files with File System Access API
-        window.saveFiles = async function(transferId) {
-            try {
-                const transferItem = document.getElementById(`transfer-${transferId}`);
-                if (!transferItem) return;
-                
-                const filesData = JSON.parse(transferItem.dataset.filesData || '[]');
-                
-                // Check if File System Access API is available
-                if ('showSaveFilePicker' in window) {
-                    for (const file of filesData) {
-                        if (file.blob) {
-                            try {
-                                // Create a handle to a new file
-                                const handle = await window.showSaveFilePicker({
-                                    suggestedName: file.name,
-                                    types: [{
-                                        description: 'Files',
-                                        accept: {
-                                            [file.type]: [`.${file.name.split('.').pop()}`]
-                                        }
-                                    }]
-                                });
-                                
-                                // Create a FileSystemWritableFileStream to write to
-                                const writableStream = await handle.createWritable();
-                                
-                                // Write the file content
-                                await writableStream.write(file.blob);
-                                
-                                // Close the file and write the contents to disk
-                                await writableStream.close();
-                                
-                                showToast(`${file.name} saved successfully`);
-                            } catch (err) {
-                                console.error('Error saving file:', err);
-                                if (err.name !== 'AbortError') {
-                                    showToast('Error saving file');
-                                }
-                            }
-                        }
-                    }
-                } else {
-                    // Fallback to download if File System Access API not available
-                    downloadFiles(transferId);
-                    showToast('Your browser doesn\'t support direct file saving. Files downloaded instead.');
-                }
-            } catch (err) {
-                console.error('Error in saveFiles:', err);
-                showToast('Error saving files');
-            }
-        };
-        
-        function formatDate(date) {
-            return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        }
-        
-        function formatFileSize(bytes) {
-            if (bytes < 1024) return bytes + ' bytes';
-            else if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
-            else return (bytes / 1048576).toFixed(1) + ' MB';
-        }
-        
-        function updateConnectionStatus(connected, text, indicatorElement, textElement) {
-            indicatorElement.className = 'status-dot ' + (connected ? 'connected' : 'disconnected');
-            textElement.textContent = text;
-        }
-        
-        function showToast(message) {
-            toast.textContent = message;
-            toast.classList.add('show');
-            
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
-        }
-        
-        // Initialize
-        loadSettings();
-        initializePeer();
     </script>
 </body>
 </html>
