@@ -6,7 +6,7 @@
     <title>PW Power Batches - Premium JEE/NEET Coaching | Physics Wallah</title>
     <meta name="description" content="Join PW Power Batches for top-quality JEE, NEET, and School preparation coaching with live interactive classes, doubt resolution, and personalized learning.">
     <meta name="keywords" content="PW Power Batches, JEE preparation, NEET coaching, Physics Wallah, online coaching, IIT JEE, medical entrance">
-    
+     <link rel="icon" href="https://i.ibb.co/Y7R076NW/IMG-20250611-150713.jpg" type="image/png">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -963,75 +963,98 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
-    <!-- Custom JS -->
-    <script>
-        // Form submission handler
-        document.getElementById('couponForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+<script>
+    // Form submission handler
+    document.getElementById('couponForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Show loader
+        document.getElementById('loader').style.display = 'block';
+        
+        // Fixed coupon code
+        const couponCode = 'YUGNA00001';
+        
+        // Form data
+        const formData = {
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            phone: document.getElementById('phone').value,
+            batchType: document.getElementById('batchType').value,
+            couponCode: couponCode,
+            timestamp: new Date().toISOString()
+        };
+        
+        // In a real implementation, you would call your Apps Script web app here
+        // Example:
+        const scriptUrl = 'https://script.google.com/macros/s/AKfycbyshloqOqxL2U2dgevCdRwaF5PHcgshZ6k_wrS3-X8rUh1jWuiG0qX4D9zxrzz5v7pJ9Q/exec';
+        fetch(scriptUrl, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(() => {
+            // Hide loader
+            document.getElementById('loader').style.display = 'none';
             
-            // Show loader
-            document.getElementById('loader').style.display = 'block';
+            // Show success modal
+            const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+            successModal.show();
             
-            // Fixed coupon code
-            const couponCode = 'YUGNA00001';
-            
-            // Form data
-            const formData = {
-                name: document.getElementById('name').value,
-                email: document.getElementById('email').value,
-                phone: document.getElementById('phone').value,
-                batchType: document.getElementById('batchType').value,
-                couponCode: couponCode,
-                timestamp: new Date().toISOString()
-            };
-            
-            // In a real implementation, you would call your Apps Script web app here
-            // Example:
-            const scriptUrl = 'https://script.google.com/macros/s/AKfycbyshloqOqxL2U2dgevCdRwaF5PHcgshZ6k_wrS3-X8rUh1jWuiG0qX4D9zxrzz5v7pJ9Q/exec';
-            fetch(scriptUrl, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData)
-            })
-            .then(() => {
-                // Hide loader
-                document.getElementById('loader').style.display = 'none';
-                
-                // Show success modal
-                const successModal = new bootstrap.Modal(document.getElementById('successModal'));
-                successModal.show();
-                
-                // Reset form
-                document.getElementById('couponForm').reset();
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                document.getElementById('loader').style.display = 'none';
-                alert('An error occurred. Please try again later.');
+            // Add event listener to remove backdrop when modal is hidden
+            document.getElementById('successModal').addEventListener('hidden.bs.modal', function () {
+                // Remove the modal backdrop
+                const backdrops = document.getElementsByClassName('modal-backdrop');
+                for (let backdrop of backdrops) {
+                    backdrop.parentNode.removeChild(backdrop);
+                }
+                // Enable body scrolling
+                document.body.style.overflow = 'auto';
+                document.body.style.paddingRight = '0';
             });
             
-            // For demo purposes, we'll just show the modal after a delay
-            setTimeout(function() {
-                // Hide loader
-                document.getElementById('loader').style.display = 'none';
-                
-                // Show success modal
-                const successModal = new bootstrap.Modal(document.getElementById('successModal'));
-                successModal.show();
-                
-                // Reset form
-                document.getElementById('couponForm').reset();
-            }, 2000);
+            // Reset form
+            document.getElementById('couponForm').reset();
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            document.getElementById('loader').style.display = 'none';
+            alert('An error occurred. Please try again later.');
         });
         
-        // Initialize tooltips
-        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-            return new bootstrap.Tooltip(tooltipTriggerEl);
-        });
-    </script>
+        // For demo purposes, we'll just show the modal after a delay
+        setTimeout(function() {
+            // Hide loader
+            document.getElementById('loader').style.display = 'none';
+            
+            // Show success modal
+            const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+            successModal.show();
+            
+            // Add event listener to remove backdrop when modal is hidden
+            document.getElementById('successModal').addEventListener('hidden.bs.modal', function () {
+                // Remove the modal backdrop
+                const backdrops = document.getElementsByClassName('modal-backdrop');
+                for (let backdrop of backdrops) {
+                    backdrop.parentNode.removeChild(backdrop);
+                }
+                // Enable body scrolling
+                document.body.style.overflow = 'auto';
+                document.body.style.paddingRight = '0';
+            });
+            
+            // Reset form
+            document.getElementById('couponForm').reset();
+        }, 2000);
+    });
+    
+    // Initialize tooltips
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+</script>
 </body>
 </html>
